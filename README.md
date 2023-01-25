@@ -1,11 +1,18 @@
-# Trabajo_DAD_Secondflow-
+# Trabajo_DAD_Secondflow
 Trabajo pagina web Diseño de Aplicaciones Distribuidas URJC 2023
+<h1> Índice </h1>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#-fase-1-"> Fase 1  </a>
+
+
+<h1> Fase 1 </h1>
 <h2>Miembros:</h2>
 Sergio Alvarez Scharfhausen<br>
- Martin Alami Mochi<br>
+Martín Alami Mochi<br>
 Eduard Vasile Stancu
 <h2>Descripción:</h2>
 Se trata de una web de compra/venta de artículos de segunda mano entre particulares
+
+
 
 <h2>Entidades:</h2>
 <h3>Usuario:</h3> Representara a las personas registradas en la pagina
