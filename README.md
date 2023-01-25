@@ -4,5 +4,5 @@ Trabajo pagina web Diseño de Aplicaciones Distribuidas URJC 2023
 Sergio Alvarez Scharfhausen<br>
  Martin Alami Mochi<br>
 Eduard Vasile Stancu
-<h2>Descrpcion:</h2>
+<h2>Descripcion:</h2>
 Se trata de una web de compra/venta de artículos de segunda mano entre particulares
