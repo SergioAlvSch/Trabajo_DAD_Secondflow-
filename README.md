@@ -6,6 +6,10 @@ Martín Alami Mochi<br>
 Eduard Vasile Stancu
 <h1> Índice </h1>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#-fase-1-"> Fase 1  </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#descripci%C3%B3n">-&nbsp &nbsp Descripción  </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#entidades">-&nbsp &nbsp Entidades </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#funcionalidades">-&nbsp &nbsp Funcionalidades </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#funcionalidades-del-servicio-interno">-&nbsp &nbsp Funcionalidad servicio interno </a>
 
 
 <h1> Fase 1 </h1>
@@ -13,15 +17,15 @@ Eduard Vasile Stancu
 <h2>Descripción:</h2>
 Se trata de una web de compra/venta de artículos de segunda mano entre particulares
 
-
-
 <h2>Entidades:</h2>
-<h3>Usuario:</h3> Representara a las personas registradas en la pagina
-<h3>Producto:</h3> Representa los artículos subidos a la plataforma por parte de los usuarios
-<h3>Transacciones:</h3> Representa las compras y las ventas de los productos
-<h3>Chat/Conversaciones:</h3> Representa el apartado de interacción entre dos usuarios 
+<strong>-&nbspUSUARIO:&nbsp &nbsp</strong> Representara a las personas registradas en la pagina
+<br><strong>-&nbspPRODUCTO:&nbsp &nbsp</strong> Representa los artículos subidos a la plataforma por parte de los usuarios
+<br><strong>-&nbspTRANSACCIONES:&nbsp &nbsp</strong> Representa las compras y las ventas de los productos
+<br><strong>-&nbspCHAT/CONVERSACIONES:&nbsp &nbsp</strong> Representa el apartado de interacción entre dos usuarios 
+
 <h2>Funcionalidades:</h2>
-<h3>Publicas:</h3> visualizar productos y perfiles de usuarios
-<h3>Privadas:</h3> Subir artículos, realizar comprar/ventas de productos y comunicación entre usuarios
+<strong>-&nbspPÚBLICAS:&nbsp &nbsp</strong> visualizar productos y perfiles de usuarios
+<br><strong>-&nbspPRIVADAS:&nbsp &nbsp</strong> Subir artículos, realizar comprar/ventas de productos y comunicación entre usuarios
+
 <h2>Funcionalidades del servicio Interno:</h2>
 Mensajería entre usuarios y envió de correo de confirmación de creación de cuenta y confirmación transacciones.
