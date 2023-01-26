@@ -6,10 +6,10 @@ Martín Alami Mochi<br>
 Eduard Vasile Stancu
 <h1> Índice </h1>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#-fase-1-"> Fase 1  </a>
-<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#descripci%C3%B3n">-&nbsp &nbsp Descripción  </a>
-<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#entidades">-&nbsp &nbsp Entidades </a>
-<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#funcionalidades">-&nbsp &nbsp Funcionalidades </a>
-<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#funcionalidades-del-servicio-interno">-&nbsp &nbsp Funcionalidad servicio interno </a>
+<br> <a href="[https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#descripci%C3%B3n](https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#descripci%C3%B3n)">-&nbsp &nbsp Descripción  </a>
+<br> <a href="[https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#entidades](https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#entidades)">-&nbsp &nbsp Entidades </a>
+<br> <a href="[https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#funcionalidades](https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#funcionalidades)">-&nbsp &nbsp Funcionalidades </a>
+<br> <a href="[https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/edit/main/README.md#funcionalidades-del-servicio-interno](https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#funcionalidades-del-servicio-interno)">-&nbsp &nbsp Funcionalidad servicio interno </a>
 
 
 <h1> Fase 1 </h1>
