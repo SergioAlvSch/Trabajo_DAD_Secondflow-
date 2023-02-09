@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>Cabecera}}
+<body>
+<h1>Rellena el siguiente Formulario</h1>
+<input type='text' name='nombreProducto'>
+<textarea name='descripcionProducto' rows=5 cols=40>
+Texto del cuadro de texto </textarea>
+<input type='checkbox' name='nombreParametro'
+       value='Electronica'>Filtros
+<h1>Imagen del Producto</h1>
+<form action="/upload_image" method="post" enctype="multipart/form-data">
+    <p>Image name: </p>
+    <input type='text' name='imageName'/>
+    <p>Image file:</p><input type='file' name='image' accept=".jpg, .jpeg"/>
+    <input type='submit' value='Save'/>
+</form>
+
+<form action='inicio'>
+    <input type='submit' value='Enviar'>
+</form>
+
+</body>
+
+{{{>PieDePagina}}}
+</html>
