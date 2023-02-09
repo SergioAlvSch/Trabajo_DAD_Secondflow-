@@ -11,5 +11,9 @@ public class GreetingController {
  model.addAttribute("name", "World");
  return "greeting_template";
  }
+ @GetMapping("/")
+ public String principal(Model modelo) {
+  return ("Formulario");
+ }
 }
 
