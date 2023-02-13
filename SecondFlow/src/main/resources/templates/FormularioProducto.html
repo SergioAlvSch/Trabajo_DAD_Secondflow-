@@ -1,0 +1,54 @@
+{{>Cabecera}}
+<title>Formulario Producto</title>
+<div style="background-color: #c9ffff">
+    <h1>Formulario de nuevo producto</h1>
+    <h3>Rellene los siguientes campos:</h3>
+    <form action="/elFormulario">
+        <label>
+            - Nombre: <input type='text' name='nombreProducto' placeholder="Nombre del producto" autocomplete="on"
+                             required>
+        </label>
+        <br>
+        <label>
+            - Categoría: <input type='text' name='categoriaProducto' placeholder="Categoria del producto" required>
+        </label>
+        <br>
+        <label>
+            - Descripción del producto: <br>
+            <textarea placeholder="Breve descripcion del producto"
+                      name='descripcionProducto' cols="40" rows="5" required></textarea>
+        </label>
+        <br>
+        <label>
+            - Precio: <input type='number' name='precioProducto' size="5"/>Euros
+        </label>
+        <br>
+        <label>
+            <input type='checkbox' name='tag'
+                   value='envio'>
+        </label>Texto Opción
+        <br>
+        <select name="estado" id="estado">
+            <option value="nuevo">Nuevo</option>
+            <option value="usado">Usado</option>
+            <option value="roto">Roto</option>
+        </select>
+        <br><br><br>
+
+        <input type="reset" value='Eliminar'/>
+        <input type="submit" value='Enviar'>
+    </form>
+    <br>
+    <h2>Mi Lista de artículos</h2>
+    <ul>
+        {{#misProductos}}
+        <li>
+            <h3>{{nombre}} </h3>
+            - Categoria: <input type="text" name="getCategoria" value={{categoria}} readonly/> <br>
+            - Precio: <input type="number" name="getPrecio" value={{precio}} readonly/> Euros<br><br>
+            - Descripcion: <p>{{descripcion}}</p>
+        </li>
+        {{/misProductos}}
+    </ul>
+</div>
+{{>PieDePagina}}

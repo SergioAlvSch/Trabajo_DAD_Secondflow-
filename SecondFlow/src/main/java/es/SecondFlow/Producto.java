@@ -14,15 +14,20 @@ public class Producto {
     private String nombre;
     private String categoria;
     private String descripcion;
+    private double precio;
 
     protected Producto() {
     }
 
-    public Producto(Long id, String nombre, String categoria, String descripcion) {
-        this.id = id;
+    public Producto(String nombre, String categoria, String descripcion, double precio) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.descripcion = descripcion;
+        this.precio = precio;
+    }
+
+    public Producto getProducto() {
+        return this;
     }
 
     public Long getId() {
@@ -52,18 +57,23 @@ public class Producto {
     public String getDescripcion() {
         return descripcion;
     }
-
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
+    public double getPrecio() {
+        return precio;
+    }
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
     @Override
     public String toString() {
-        return "Producto{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", categoria='" + categoria + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                '}';
+        return "Producto: " + "\n" +
+                "- id =" + id + "\n" +
+                "- nombre ='" + nombre + '\n' +
+                "- categoria ='" + categoria + '\n' +
+                "- descripcion ='" + descripcion + '\n';
     }
 }
