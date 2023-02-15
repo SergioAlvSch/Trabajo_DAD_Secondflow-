@@ -1,17 +1,20 @@
 package es.SecondFlow;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+@Entity
 public class Usuario {
+    @OneToMany
     List<Producto> listaProductos;
     String nombreUsuario;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    Usuario() {
-
-    }
 
     public Usuario(List<Producto> listaProductos, String nombreUsuario) {
         this.listaProductos = new List<Producto>() {
@@ -143,11 +146,24 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
+    public Usuario() {
+
+    }
+
+
     public void meterArticuloALista(Producto producto) {
         listaProductos.add(producto);
     }
 
     public List<Producto> getListaProductos() {
         return this.listaProductos;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
