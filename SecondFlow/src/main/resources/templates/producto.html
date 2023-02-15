@@ -1,0 +1,29 @@
+{{>Cabecera}}
+<div style="background-color: #c9ffff">
+    <div style="text-align: center">
+        <div>
+            <h2>{{producto.nombre}}</h2>
+            {{#producto.Hayimagen}}
+            <img src="/productos/{{producto.id}}/image">
+            {{/producto.Hayimagen}}
+
+            {{^producto.Hayimagen}}
+            <img src="/images/no_image.png">
+            {{/producto.Hayimagen}}
+            <div>
+                <br>
+                <p><strong>Nombre: </strong><br>{{producto.nombre}}</p>
+                <p><strong>Categoria:</strong><br> {{producto.categoria}}</p> <br>
+                <p><strong>Descripción:</strong><br>{{producto.descripcion}}</p>
+            </div>
+            <br><br>
+            <button onclick="location.href='/productoeliminado/{{producto.id}}'">Eliminar</button>
+            <button onclick="location.href='/editbook/{{producto.id}}'">Edit</button>
+            <br>
+            <button onclick="location.href='/'">Volver al Inicio</button>
+            </p>
+        </div>
+    </div>
+</div>
+
+{{>PieDePagina}}

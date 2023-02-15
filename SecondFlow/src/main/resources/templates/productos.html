@@ -1,0 +1,18 @@
+<h2>Lista de Productos</h2>
+<ul>
+    {{#listaProductos}}
+    <li>
+        {{#isHayImagen}}
+        <img src="/productos/{{producto.id}}">
+        {{/isHayImagen}}
+
+        {{^isHayImagen}}
+        <img src=productoGenerico.png">
+        {{/isHayImagen}}
+        <br><a href="./{{nombre}}">{{nombre}}</a>
+
+    </li>
+    {{/listaProductos}}
+</ul>
+
+<button onclick="location.href='/Formulario'">Nuevo producto</button>
