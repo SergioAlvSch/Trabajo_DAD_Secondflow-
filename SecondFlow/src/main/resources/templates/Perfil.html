@@ -1,0 +1,26 @@
+{{>Cabecera}}
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil</title>
+</head>
+<body>
+<h1>Este es el apatado de perfil</h1>
+<h2>Nombre:</h2> {{nombreUsuario}}
+<ul>
+    {{#misProductos}}
+    <li>
+        <a href="./{{id}}">
+            <h3>{{nombre}} </h3>
+        </a>
+        <strong>- Categoria: </strong>
+        <p>{{categoria}} </p> <br>
+        <strong>- Precio: </strong>
+        <p>{{precio}}</p><br>
+        <strong>- Descripción: </strong>
+        <p>{{descripcion}}</p>
+    </li>
+    {{/misProductos}}
+</ul>
+
+</body>
+{{>PieDePagina}}
