@@ -1,9 +1,7 @@
 package es.SecondFlow;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Blob;
 
 @Entity
 public class Producto {
@@ -11,19 +9,49 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(columnDefinition = "TEXT")
     private String nombre;
+
     private String categoria;
+
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
+
     private double precio;
+
+    @Lob
+    private Blob imagenProducto;
+
+    private boolean hayImagen;
+    @ManyToOne
+    private Usuario vendedor;
+
 
     protected Producto() {
     }
 
     public Producto(String nombre, String categoria, String descripcion, double precio) {
+        super();
         this.nombre = nombre;
         this.categoria = categoria;
         this.descripcion = descripcion;
         this.precio = precio;
+    }
+
+    public Blob getImagenProducto() {
+        return imagenProducto;
+    }
+
+    public void setImagenProducto(Blob imagenProducto) {
+        this.imagenProducto = imagenProducto;
+    }
+
+    public boolean isHayImagen() {
+        return hayImagen;
+    }
+
+    public void setHayImagen(boolean hayImagen) {
+        this.hayImagen = hayImagen;
     }
 
     public Producto getProducto() {
@@ -57,6 +85,7 @@ public class Producto {
     public String getDescripcion() {
         return descripcion;
     }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
@@ -64,16 +93,21 @@ public class Producto {
     public double getPrecio() {
         return precio;
     }
+
     public void setPrecio(double precio) {
         this.precio = precio;
     }
 
+
     @Override
     public String toString() {
-        return "Producto: " + "\n" +
-                "- id =" + id + "\n" +
-                "- nombre ='" + nombre + '\n' +
-                "- categoria ='" + categoria + '\n' +
-                "- descripcion ='" + descripcion + '\n';
+        return "Producto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", precio=" + precio +
+                '}';
     }
+
 }
