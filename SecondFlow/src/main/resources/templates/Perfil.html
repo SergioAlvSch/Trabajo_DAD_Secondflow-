@@ -4,23 +4,22 @@
     <title>Perfil</title>
 </head>
 <body>
-<h1>Este es el apatado de perfil</h1>
-<h2>Nombre:</h2> {{nombreUsuario}}
+<h1>Mi Perfil</h1>
+<h2>Nombre:</h2> {{miPerfil.nombre}}
 <ul>
-    {{#misProductos}}
+    {{#miPerfil.listaProductos}}
     <li>
-        <a href="./{{id}}">
+        <a href="./{{nombre}}">
             <h3>{{nombre}} </h3>
         </a>
         <strong>- Categoria: </strong>
         <p>{{categoria}} </p> <br>
         <strong>- Precio: </strong>
         <p>{{precio}}</p><br>
-        <strong>- Descripción: </strong>
+        <strong>- DescripciÃ³n: </strong>
         <p>{{descripcion}}</p>
     </li>
-    {{/misProductos}}
+    {{/miPerfil.listaProductos}}
 </ul>
-
 </body>
 {{>PieDePagina}}
