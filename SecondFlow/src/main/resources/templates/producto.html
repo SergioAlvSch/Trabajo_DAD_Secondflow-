@@ -1,27 +1,35 @@
 {{>Cabecera}}
+<head>
+    <meta charset="UTF-8">
+    <title>Producto</title>
+</head>
+
 <div style="background-color: #c9ffff">
     <div style="text-align: center">
         <div>
             <h2>{{producto.nombre}}</h2>
-            {{#producto.Hayimagen}}
-            <img src="/productos/{{producto.id}}/image">
-            {{/producto.Hayimagen}}
+            {{#hayimagen}}
+            <img src="/{{producto.id}}/image">
+            {{/hayimagen}}
 
-            {{^producto.Hayimagen}}
-            <img src="/images/no_image.png">
-            {{/producto.Hayimagen}}
+            {{^hayimagen}}
+            <img src=/productoGenerico.png>
+            {{/hayimagen}}
             <div>
                 <br>
                 <p><strong>Nombre: </strong><br>{{producto.nombre}}</p>
-                <p><strong>Categoria:</strong><br> {{producto.categoria}}</p> <br>
+                <p><strong>Categoria:</strong><br> {{producto.categoria}}</p>
                 <p><strong>Descripción:</strong><br>{{producto.descripcion}}</p>
+                <p><strong>Precio:</strong><br>{{producto.precio}}</p>
             </div>
             <br><br>
-            <button onclick="location.href='/productoeliminado/{{producto.id}}'">Eliminar</button>
-            <button onclick="location.href='/editbook/{{producto.id}}'">Edit</button>
+            <button onclick="location.href='/eliminarProducto/{{producto.id}}'">Eliminar</button>
+            <button onclick="location.href='/modificando/{{producto.id}}'">Editar</button>
+
             <br>
             <button onclick="location.href='/'">Volver al Inicio</button>
             </p>
+
         </div>
     </div>
 </div>
