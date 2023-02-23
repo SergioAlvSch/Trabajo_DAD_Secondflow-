@@ -1,5 +1,8 @@
 package es.SecondFlow;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Iterator;
@@ -7,25 +10,31 @@ import java.util.List;
 import java.util.ListIterator;
 
 @Entity
+@Component
+@SessionScope //instancia del componente de cada usuario
 public class Usuario {
     @OneToMany
-    List<Producto> listaProductos;
+    List<Producto> listaMisProductos;
+    @OneToMany
+    List<Producto> listaMisProductosComprados;
+
     String nombreUsuario;
+    String informacionUsuario;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
 
-    public Usuario(List<Producto> listaProductos, String nombreUsuario) {
-        this.listaProductos = new List<Producto>() {
+    public Usuario(String nombreUsuario) {
+        this.listaMisProductos = new List<Producto>() {
             @Override
             public int size() {
-                return listaProductos.size();
+                return listaMisProductos.size();
             }
 
             @Override
             public boolean isEmpty() {
-                return false;
+                return listaMisProductos.size() == 0;
             }
 
             @Override
@@ -152,18 +161,32 @@ public class Usuario {
 
 
     public void meterArticuloALista(Producto producto) {
-        listaProductos.add(producto);
+        listaMisProductos.add(producto);
     }
 
     public List<Producto> getListaProductos() {
-        return this.listaProductos;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        return this.listaMisProductos;
     }
 
     public Long getId() {
         return id;
     }
+
+    public void setInformacionUsuario(String info) {
+        this.informacionUsuario = info;
+    }
+
+    public String getInformacionUsuario() {
+        return this.informacionUsuario;
+    }
+
+    public String getNombreUsuario() {
+        return this.nombreUsuario;
+    }
+
+    public List<Producto> getListaProductosComprados() {
+        return this.listaMisProductosComprados;
+    }
+
 }
+
