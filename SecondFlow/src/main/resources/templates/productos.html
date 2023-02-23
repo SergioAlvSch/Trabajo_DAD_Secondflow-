@@ -1,18 +1,22 @@
 <h2>Lista de Productos</h2>
+<div style="background-color: #c9ffff">
+    <div style="text-align: center">
+<input type="search" class="form-control" placeholder="Escriba aquí su consulta">
+<button class="form-group">Buscar</button>
 <ul>
     {{#listaProductos}}
     <li>
         {{#isHayImagen}}
-        <img src="/productos/{{producto.id}}">
+        <img src="/productos/{{id}}">
         {{/isHayImagen}}
 
         {{^isHayImagen}}
-        <img src=productoGenerico.png">
+        <img src="/productoGenerico.png">
         {{/isHayImagen}}
-        <br><a href="./{{nombre}}">{{nombre}}</a>
-
+        <br><a href="./productos/{{id}}">{{nombre}}</a>
     </li>
     {{/listaProductos}}
-</ul>
 
-<button onclick="location.href='/Formulario'">Nuevo producto</button>
+</ul>
+    </div>
+</div>
