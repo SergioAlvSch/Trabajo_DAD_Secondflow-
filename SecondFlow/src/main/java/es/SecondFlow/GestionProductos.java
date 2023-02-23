@@ -25,6 +25,11 @@ public class GestionProductos {
         }
         return null;
     }
+    public long getIDbyNombre(String nombre){
+        return this.findByNombre(nombre).getId();
+    }
+
+    public void update(Producto Producto){repositorio.flush();}
 
     public boolean exist(long id) {
         return repositorio.existsById(id);
@@ -35,7 +40,7 @@ public class GestionProductos {
     }
 
     public void save(Producto producto) {
-        repositorio.save(producto);
+        repositorio.saveAndFlush(producto);
     }
 
     public void delete(long id) {
