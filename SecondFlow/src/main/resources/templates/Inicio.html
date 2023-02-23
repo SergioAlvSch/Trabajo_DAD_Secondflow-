@@ -2,15 +2,17 @@
 {{>Cabecera}}
 <body>
 <div style="background-color: #c9ffff">
-    <div style="text-align: justify-all">
+    <div style="text-align: center">
         <h2>Bienvenido al espacio de compra - venta mas grande en el mundo universitario </h2>
-
-        <form action='Formulario'>- Presione este botón para subir un producto nuevo
-            <input type='submit' value='Ir a formulario'>
-        </form>
-        {{>productos}}
-        <br>
     </div>
+    <form action='Formulario'>- Subir un nuevo Producto
+        <input type='submit' value='Ir a formulario'>
+    </form>
+    <form action='/Perfil'>- Accede a tu perfil
+        <input type='submit' value='Mi Perfil'>
+    </form>
+    {{>productos}}
+    <br>
 </div>
 </body>
 {{>PieDePagina}}
