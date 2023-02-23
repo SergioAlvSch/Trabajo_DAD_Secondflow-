@@ -6,35 +6,45 @@
     <h3>Rellene los siguientes campos:</h3>
 
 
-    <form action="/elFormulario">
+    <form method="post" action="/NuevoProducto" enctype="multipart/form-data">
+
+        <label>
+            - Imagen: <input type='file' name='imagenProducto' accept=".png, .jpg, .jpeg">
+        </label><br><br>
         <label>
             - Nombre: <input type='text' name='nombreProducto' placeholder="Nombre del producto" autocomplete="on"
                              required>
         </label>
-        <br>
+        <br><br>
         <label>
             - Categoría:
-            <select name="categoriaProducto" id="categoriaProducto" sel>
-                <option value="Ropa">Ropa</option>
+            <select name="categoriaProducto" id="categoriaProducto" required>
+                <option value="" selected disabled hidden>-- Elija una categoria --</option>
+                <option value="Automoviles">Automoviles</option>
                 <option value="Calzado">Calzado</option>
+                <option value="Electrodomesticos">Electrodomésticos</option>
+                <option value="Hogar">Hogar</option>
+                <option value="Libros">Libros</option>
+                <option value="Deporte">Deporte</option>
+                <option value="Ropa">Ropa</option>
                 <option value="Tecnologia">Tecnologia</option>
             </select>
         </label>
-        <br>
+        <br><br>
         <label>
             - Descripción del producto: <br>
             <textarea placeholder="Breve descripcion del producto"
                       name='descripcionProducto' cols="40" rows="5" required></textarea>
         </label>
-        <br>
+        <br><br>
         <label>
-            - Precio: <input type='number' name='precioProducto' min="0" step="0.01" size="5"/> Euros
+            - Precio: <input type='number' name='precioProducto' min="0" step="0.01" size="5" required/> Euros
         </label>
         <br><br><br>
         <input type="reset" value='Eliminar'/>
-        <input type="submit" value='Enviar'>
+        <input type="submit" value='Crear Producto'>
     </form>
     <br>
-    <button> <a href="Inicio.html">Lista productos</a></button>
+
 </div>
 {{>PieDePagina}}
