@@ -1,5 +1,7 @@
 package es.SecondFlow;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.sql.Blob;
 
@@ -26,7 +28,6 @@ public class Producto {
     @ManyToOne
     private Usuario vendedor;
 
-
     protected Producto() {
     }
 
@@ -37,6 +38,16 @@ public class Producto {
         this.descripcion = descripcion;
         this.precio = precio;
     }
+
+    public Producto(String nombre, String categoria, String descripcion, double precio, Blob imagenProducto) {
+        super();
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.imagenProducto = imagenProducto;
+    }
+
 
     public Blob getImagenProducto() {
         return imagenProducto;
@@ -60,10 +71,6 @@ public class Producto {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {
