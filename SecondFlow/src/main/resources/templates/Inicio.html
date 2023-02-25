@@ -6,9 +6,9 @@
         <h2>Bienvenido al espacio de compra - venta mas grande en el mundo universitario </h2>
     </div>
     <form action='Formulario'>- Subir un nuevo Producto
-        <input type='submit' value='Ir a formulario'>
+        <input type='submit' value='Formulario Nuevo Producto'>
     </form>
-    <form action='/Perfil'>- Accede a tu perfil
+    <form action='/Perfil/{{usuario.id}}'>- Accede a tu perfil
         <input type='submit' value='Mi Perfil'>
     </form>
     {{>productos}}
