@@ -28,15 +28,19 @@ public class Producto {
     @ManyToOne
     private Usuario vendedor;
 
+    @ManyToOne
+    private Usuario comprador;
+
     protected Producto() {
     }
 
-    public Producto(String nombre, String categoria, String descripcion, double precio) {
+    public Producto(String nombre, String categoria, String descripcion, double precio, Usuario vendedor) {
         super();
         this.nombre = nombre;
         this.categoria = categoria;
         this.descripcion = descripcion;
         this.precio = precio;
+        this.vendedor = vendedor;
     }
 
     public Producto(String nombre, String categoria, String descripcion, double precio, Blob imagenProducto) {
@@ -105,6 +109,18 @@ public class Producto {
         this.precio = precio;
     }
 
+    public Usuario getVendedor() {
+        return vendedor;
+    }
+
+    public Usuario getComprador() {
+        return comprador;
+    }
+
+    public void setComprador(Usuario comprador) {
+        this.comprador = comprador;
+    }
+
 
     @Override
     public String toString() {
@@ -116,5 +132,4 @@ public class Producto {
                 ", precio=" + precio +
                 '}';
     }
-
 }
