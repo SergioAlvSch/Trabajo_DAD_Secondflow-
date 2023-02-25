@@ -13,13 +13,12 @@ import java.util.ListIterator;
 @Component
 @SessionScope //instancia del componente de cada usuario
 public class Usuario {
-    @OneToMany
+    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Producto> listaMisProductos;
-    @OneToMany
+    @OneToMany(mappedBy = "comprador", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Producto> listaMisProductosComprados;
 
     String nombreUsuario;
-    String informacionUsuario;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -170,14 +169,6 @@ public class Usuario {
 
     public Long getId() {
         return id;
-    }
-
-    public void setInformacionUsuario(String info) {
-        this.informacionUsuario = info;
-    }
-
-    public String getInformacionUsuario() {
-        return this.informacionUsuario;
     }
 
     public String getNombreUsuario() {
