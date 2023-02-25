@@ -32,24 +32,25 @@ public class SecondFlowController {
 
     @GetMapping("/")
     public String mostrarPaginaPrincipal(Model model) {
+        Optional<Usuario> u = gestionUsuarios.findById(1);
         mostrarListaProductos(model);
+        model.addAttribute("usuario", u.get());
         return "Inicio";
     }
 
-    @GetMapping("/Perfil")
+    @GetMapping("/Perfil/{id}")
     public String mostrarPerfil(Model model, @PathVariable long id) {
-        model.addAttribute("miPerfil", usuario);
 
-        Optional<Usuario> u = gestionUsuarios.findById(id);
+        Optional<Usuario> u = gestionUsuarios.findById(id);//solo hay un usuario, como no se podrá pasar, pues debe de ser el 1
         if (u.isPresent()) {
-            model.addAttribute("producto", u);
-            return "producto";
+            model.addAttribute("usuario", u.get());
+            return "Perfil";
         } else {
-            return "productos";
+            return "inicio";
         }
     }
 
-    @GetMapping("/buscar")
+    @GetMapping("/buscar/{nombre}")
     public String busqueda(Model model, @PathVariable String nombre) {
         model.addAttribute("misProductos", gestionProductos.findByNombre(nombre));
         return "Inicio";
@@ -71,6 +72,19 @@ public class SecondFlowController {
         if (p.isPresent()) {
             model.addAttribute("producto", p.get());
             return "producto";
+        } else {
+            model.addAttribute("listaProductos", gestionProductos.findAll());
+            return "productos";
+        }
+    }
+    @GetMapping("/comprar/producto/{id}")
+    public String comprarProducto(Model model, @PathVariable long id) {
+
+        Optional<Producto> p = gestionProductos.findById(id);
+
+        if (p.isPresent()) {
+            model.addAttribute("producto", p.get());
+            return "//////";
         } else {
             model.addAttribute("listaProductos", gestionProductos.findAll());
             return "productos";
@@ -103,8 +117,8 @@ public class SecondFlowController {
         }
     }
 
-    @GetMapping("/modificado/{id}")
-    public String modificarProducto(Model model, @PathVariable long id, String nombreProducto, String categoriaProducto, double precioProducto, String descripcionProducto) {
+    @RequestMapping("/modificado/{id}")
+    public String productoModificado(Model model, @PathVariable long id, String nombreProducto, String categoriaProducto, double precioProducto, String descripcionProducto, MultipartFile imageField, boolean removeImage) throws IOException {
 
 
         Optional<Producto> producto = gestionProductos.findById(id);
@@ -113,7 +127,14 @@ public class SecondFlowController {
             producto.get().setCategoria(categoriaProducto);
             producto.get().setPrecio(precioProducto);
             producto.get().setDescripcion(descripcionProducto);
-            gestionProductos.update(producto.get());
+            Usuario vendedor = producto.get().getVendedor();
+
+            try {
+                updateImage(producto.get(), removeImage, imageField);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            gestionProductos.update();
             model.addAttribute("producto", producto.get());
             return "producto";
         } else {
@@ -122,21 +143,40 @@ public class SecondFlowController {
     }
 
     @RequestMapping("/NuevoProducto")
-    public String crearProducto(Model model, String nombreProducto, String categoriaProducto, String descripcionProducto, double precioProducto) {
-        Producto p = new Producto(nombreProducto, categoriaProducto, descripcionProducto, precioProducto);
+    public String crearProducto(Model model, String nombreProducto, String categoriaProducto, String descripcionProducto, double precioProducto, MultipartFile imageField) throws IOException {
+
+        Usuario vendedor = gestionUsuarios.findById(2).get();
+        Producto p = new Producto(nombreProducto, categoriaProducto, descripcionProducto, precioProducto, vendedor);
+
+        if (!imageField.isEmpty()) {
+            p.setImagenProducto(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+            p.setHayImagen(true);
+        }
+        vendedor.listaMisProductos.add(p);
         model.addAttribute("producto", p);
         gestionProductos.save(p);
         return "producto";
     }
 
-    @PostMapping("/subirImagen")
-    public ResponseEntity<Object> subirImagen(@RequestParam MultipartFile imagen, String nombre) throws IOException {
+    private void updateImage(Producto producto, boolean removeImage, MultipartFile imageField) throws IOException, SQLException {
 
-        Producto p = gestionProductos.findById(gestionProductos.getIDbyNombre(nombre)).orElseThrow();
-        URI localizacion = fromCurrentRequest().build().toUri();
-        p.setImagenProducto(BlobProxy.generateProxy(imagen.getInputStream(), imagen.getSize()));
-        gestionProductos.save(p);
-        return ResponseEntity.created(localizacion).build();
+        if (!imageField.isEmpty()) {
+            producto.setImagenProducto(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+            producto.setHayImagen(true);
+        } else {
+            if (removeImage) {
+                producto.setImagenProducto(null);
+                producto.setHayImagen(false);
+            } else {
+                // Maintain the same image loading it before updating the book
+                Producto dbProducto = gestionProductos.findById(producto.getId()).orElseThrow();
+                if (dbProducto.isHayImagen()) {
+                    producto.setImagenProducto(BlobProxy.generateProxy(dbProducto.getImagenProducto().getBinaryStream(),
+                            dbProducto.getImagenProducto().length()));
+                    producto.setHayImagen(true);
+                }
+            }
+        }
     }
 
 
@@ -154,11 +194,32 @@ public class SecondFlowController {
 
             Resource file = new InputStreamResource(producto.get().getImagenProducto().getBinaryStream());
 
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "jpeg")
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/png")
                     .contentLength(producto.get().getImagenProducto().length()).body(file);
 
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/conversaciones")
+    public String mostrarListaConversaciones(Model model) {
+        model.addAttribute("listaConversaciones", gestionProductos.findAll());
+        return "conversaciones";
+    }
+
+
+    @GetMapping("/conversaciones/{id}")
+    public String getConversación(Model model, @PathVariable long id) {
+
+        Optional<Producto> p = gestionProductos.findById(id);
+
+        if (p.isPresent()) {
+            model.addAttribute("producto", p.get());
+            return "producto";
+        } else {
+            model.addAttribute("listaProductos", gestionProductos.findAll());
+            return "productos";
         }
     }
 }
