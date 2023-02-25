@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.Temporal;
 
 import javax.persistence.*;
 import java.time.*;
+import java.util.List;
 
 @Entity
 public class Mensaje {
@@ -11,13 +12,15 @@ public class Mensaje {
     Long id;
 
     String texto;
-    @ManyToOne
-    Usuario emisor;
-
-    @ManyToOne
-    Usuario receptor;
 
     LocalDate fecha;
 
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    Conversacion conversacionEmisor;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    Conversacion conversacionReceptor;
 
 }
