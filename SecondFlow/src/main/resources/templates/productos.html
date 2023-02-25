@@ -7,11 +7,11 @@
     {{#listaProductos}}
     <li>
         {{#isHayImagen}}
-        <img src="/productos/{{id}}">
+        <img src="/producto/{{producto.id}}/image" height="200" width="300">
         {{/isHayImagen}}
 
         {{^isHayImagen}}
-        <img src="/productoGenerico.png">
+        <img src="/productoGenerico.png" height="400" width="400">
         {{/isHayImagen}}
         <br><a href="./productos/{{id}}">{{nombre}}</a>
     </li>
