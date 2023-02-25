@@ -4,22 +4,27 @@
     <title>Perfil</title>
 </head>
 <body>
-<h1>Mi Perfil</h1>
-<h2>Nombre:</h2> {{miPerfil.nombre}}
-<ul>
-    {{#miPerfil.listaProductos}}
-    <li>
-        <a href="./{{nombre}}">
-            <h3>{{nombre}} </h3>
-        </a>
-        <strong>- Categoria: </strong>
-        <p>{{categoria}} </p> <br>
-        <strong>- Precio: </strong>
-        <p>{{precio}}</p><br>
-        <strong>- DescripciÃ³n: </strong>
-        <p>{{descripcion}}</p>
-    </li>
-    {{/miPerfil.listaProductos}}
-</ul>
+<div style="background-color: #c9ffff">
+    <h1>Mi Perfil</h1>
+    <h2>Nombre: {{usuario.nombreUsuario}}</h2>
+
+    <h2>Lista de producto: </h2>
+
+    <ul>
+        {{#usuario.listaProductos}}
+        <li>
+            <a href="/productos/{{id}}">
+                <h3>{{nombre}} </h3>
+            </a>
+            <strong>- Categoria: </strong>
+            <p>{{categoria}} </p> <br>
+            <strong>- Precio: </strong>
+            <p>{{precio}}</p><br>
+            <strong>- Descripción: </strong>
+            <p>{{descripcion}}</p>
+        </li>
+        {{/usuario.listaProductos}}
+    </ul>
+</div>
 </body>
 {{>PieDePagina}}
