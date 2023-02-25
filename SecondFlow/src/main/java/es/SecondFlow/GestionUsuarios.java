@@ -27,7 +27,8 @@ public class GestionUsuarios {
         return this.findByNombre(nombre).getId();
     }
 
-    public void update(Usuario Usuario){repositorioUsuarios.flush();}
+    public void update(){repositorioUsuarios.flush();}
+
 
     public boolean exist(long id) {
         return repositorioUsuarios.existsById(id);
