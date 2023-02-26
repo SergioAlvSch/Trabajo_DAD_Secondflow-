@@ -1,5 +1,6 @@
 package es.SecondFlow;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,5 +47,14 @@ public class GestionProductos {
     public void delete(long id) {
         repositorio.deleteById(id);
     }
-}
+
+    public List<Producto> findAllDisponibles() {
+        List<Producto> listaDisponibles = new ArrayList<>();
+        for(Producto aux : repositorio.findAll()){
+            if(aux.getComprador()==null){
+                listaDisponibles.add(aux);
+            }
+        }
+        return listaDisponibles;
+    }
 
