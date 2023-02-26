@@ -3,13 +3,16 @@
 <body>
 <div style="background-color: #c9ffff">
     <div style="text-align: center">
-        <h2>Bienvenido al espacio de compra - venta mas grande en el mundo universitario </h2>
+        <h1>Bienvenido al espacio de compra - venta mas grande en el mundo universitario </h1>
     </div>
     <form action='Formulario'>- Subir un nuevo Producto
         <input type='submit' value='Formulario Nuevo Producto'>
     </form>
     <form action='/Perfil/{{usuario.id}}'>- Accede a tu perfil
         <input type='submit' value='Mi Perfil'>
+    </form>
+    <form action='/conversaciones/{{usuario.id}}'>- Accede a tus conversaciones
+        <input type='submit' value='Chats'>
     </form>
     {{>productos}}
     <br>
