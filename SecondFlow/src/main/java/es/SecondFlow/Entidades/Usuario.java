@@ -1,4 +1,4 @@
-package es.SecondFlow;
+package es.SecondFlow.Entidades;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -39,12 +39,6 @@ public class Usuario {
 
     }
 
-
-
-    public void meterArticuloALista(Producto producto) {
-        listaMisProductos.add(producto);
-    }
-
     public List<Producto> getListaProductos() {
         return this.listaMisProductos;
     }
@@ -69,6 +63,3 @@ public class Usuario {
         return listaMisConversacionesR;
     }
 }
-
-
-
