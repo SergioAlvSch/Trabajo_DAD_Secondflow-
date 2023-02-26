@@ -1,0 +1,30 @@
+{{>Cabecera}}
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de compras</title>
+</head>
+<div style="background-color: #c9ffff">
+    <div style="text-align: center">
+        <h2>Nombre: {{usuario.nombreUsuario}}</h2>
+        <h2>Historial de compras: </h2>
+        <ul>
+            {{#listaProductos}}
+            <li>
+                {{#isHayImagen}}
+                <img src="/producto/{{producto.id}}/image" height="200" width="300">
+                {{/isHayImagen}}
+
+                {{^isHayImagen}}
+                <img src="/productoGenerico.png" height="400" width="400">
+                {{/isHayImagen}}
+                <br>- Nombre: {{nombre}}
+                <br>- Descripcion: {{descripcion}}
+                <br>- Categoria: {{categoria}}
+                <br>- Precio: {{precio}}
+                <br>- Comprado a: <a href="/Perfil/{{vendedor.id}}">{{vendedor.nombreUsuario}}</a>
+            </li>
+            {{/listaProductos}}
+        </ul>
+    </div>
+</div>
+{{>PieDePagina}}
