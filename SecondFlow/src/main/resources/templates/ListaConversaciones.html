@@ -1,0 +1,18 @@
+{{>Cabecera}}
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Conversaciones</title>
+</head>
+<div style="background-color: #c9ffff">
+    <div style="text-align: center">
+<h1>Mis conversaciones: </h1>
+<ul>
+    {{#listaConversaciones}}
+    <li>
+        <p><strong></strong><br><a href="/comprar/producto/{{producto.id}}">Chat con: {{producto.vendedor.nombreUsuario}} para: {{producto.nombre}}</a>
+    </li>
+    {{/listaConversaciones}}
+</ul>
+    </div>
+</div>
+{{>PieDePagina}}
