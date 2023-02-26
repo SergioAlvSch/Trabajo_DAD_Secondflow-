@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.net.URI;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +30,19 @@ public class SecondFlowController {
 
     @Autowired
     private GestionUsuarios gestionUsuarios;
-    Usuario usuario;
+    
+    @Autowired
+    private GestionConversaciones gestionConversaciones;
+
+    @Autowired
+    Usuario usuarioComprador;
+
+    @Autowired
+    Usuario usarioVendedor;
 
     @GetMapping("/")
     public String mostrarPaginaPrincipal(Model model) {
+
         Optional<Usuario> u = gestionUsuarios.findById(1);
         mostrarListaProductos(model);
         model.addAttribute("usuario", u.get());
@@ -59,7 +70,7 @@ public class SecondFlowController {
 
     @GetMapping("/productos")
     public String mostrarListaProductos(Model model) {
-        model.addAttribute("listaProductos", gestionProductos.findAll());
+        model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
         return "productos";
     }
 
@@ -73,22 +84,59 @@ public class SecondFlowController {
             model.addAttribute("producto", p.get());
             return "producto";
         } else {
-            model.addAttribute("listaProductos", gestionProductos.findAll());
+            model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
             return "productos";
         }
     }
     @GetMapping("/comprar/producto/{id}")
     public String comprarProducto(Model model, @PathVariable long id) {
-
+        
         Optional<Producto> p = gestionProductos.findById(id);
 
         if (p.isPresent()) {
+            Usuario vendedor=p.get().getVendedor();
+            Optional<Usuario> comprador =gestionUsuarios.findById(1);
             model.addAttribute("producto", p.get());
-            return "//////";
+            Conversacion c = gestionConversaciones.findByUsuarios(comprador.get(),vendedor,p.get());
+            if(c==null){
+                c= new Conversacion(comprador.get(),vendedor,p.get());
+                gestionConversaciones.save(c);
+                comprador.get().listaMisConversacionesE.add(c);
+                vendedor.listaMisConversacionesR.add(c);
+                gestionUsuarios.update();
+            }
+            List<Conversacion>auxConversaciones=new ArrayList<>();
+            auxConversaciones.addAll(comprador.get().listaMisConversacionesE);
+            auxConversaciones.addAll(comprador.get().listaMisConversacionesR);
+            model.addAttribute("listaConversaciones", auxConversaciones);
+            model.addAttribute("conversacionAbierta", c);
+            model.addAttribute("idComprador",comprador.get().getId());
+            return "Chat";
         } else {
-            model.addAttribute("listaProductos", gestionProductos.findAll());
+            model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
             return "productos";
         }
+    }
+
+    @RequestMapping("/producto/vendido/{id}/{idComprador}")
+    public String productoVendido(Model model,@PathVariable long id,@PathVariable long idComprador){
+        Optional<Producto> p = gestionProductos.findById(id);
+        if (p.isPresent()){
+            Usuario vendedor= p.get().getVendedor();
+            Optional<Usuario> comprador =gestionUsuarios.findById(idComprador);
+            if (comprador.isPresent()){
+                comprador.get().listaMisProductosComprados.add(p.get());
+                p.get().setHayComprador();
+                vendedor.listaMisProductos.remove(p.get());
+                p.get().setComprador(comprador.get());
+                gestionProductos.delete(p.get().getId());
+                gestionUsuarios.update();
+                gestionProductos.update();
+                model.addAttribute("producto", p.get());
+                return "productoVendido";
+            }
+        }
+        return "Inicio";
     }
 
     @GetMapping("/eliminarProducto/{id}")
@@ -100,6 +148,7 @@ public class SecondFlowController {
             gestionProductos.delete(id);
             return "productoeliminado";
         } else {
+            model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
             return "productos";
         }
     }
@@ -113,6 +162,7 @@ public class SecondFlowController {
             model.addAttribute("producto", producto.get());
             return "modificarProducto";
         } else {
+            model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
             return "productos";
         }
     }
@@ -138,6 +188,7 @@ public class SecondFlowController {
             model.addAttribute("producto", producto.get());
             return "producto";
         } else {
+            model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
             return "productos";
         }
     }
@@ -209,17 +260,25 @@ public class SecondFlowController {
     }
 
 
-    @GetMapping("/conversaciones/{id}")
-    public String getConversación(Model model, @PathVariable long id) {
+    @RequestMapping("/conversaciones/{id}/Enviado/{idEmisor}")
+    public String getConversación(Model model, @PathVariable long id,String mensaje,@PathVariable long idEmisor) {
+
 
         Optional<Producto> p = gestionProductos.findById(id);
 
         if (p.isPresent()) {
+            Usuario vendedor=p.get().getVendedor();
+            Optional<Usuario> comprador =gestionUsuarios.findById(1);
             model.addAttribute("producto", p.get());
-            return "producto";
+
+            Conversacion c = gestionConversaciones.findByUsuarios(comprador.get(),vendedor,p.get());
+
+            Mensaje nuevoMensaje=new Mensaje(mensaje, LocalDateTime.now(),idEmisor);
+            model.addAttribute("conversacion", nuevoMensaje);
+            return "conversacion";
         } else {
-            model.addAttribute("listaProductos", gestionProductos.findAll());
-            return "productos";
+            model.addAttribute("listaConversaciones", gestionProductos.findAllDisponibles());
+            return "conversacion";
         }
     }
 }
