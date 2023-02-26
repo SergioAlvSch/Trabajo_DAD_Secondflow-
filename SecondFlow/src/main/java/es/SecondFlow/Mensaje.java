@@ -13,14 +13,23 @@ public class Mensaje {
 
     String texto;
 
-    LocalDate fecha;
+    LocalDateTime fecha;
+
+    long idEmisor;
 
 
 
     @ManyToOne(cascade = CascadeType.ALL)
-    Conversacion conversacionEmisor;
+    Conversacion conversacion;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    Conversacion conversacionReceptor;
 
+    public Mensaje(String texto, LocalDateTime fecha, long idEmisor) {
+        super();
+        this.texto = texto;
+        this.fecha = fecha;
+        this.idEmisor = idEmisor;
+    }
+    public Mensaje(){
+
+    }
 }
