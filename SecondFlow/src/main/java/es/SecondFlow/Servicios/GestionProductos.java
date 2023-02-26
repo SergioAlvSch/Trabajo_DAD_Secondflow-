@@ -1,9 +1,11 @@
-package es.SecondFlow;
+package es.SecondFlow.Servicios;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import es.SecondFlow.Entidades.Producto;
+import es.SecondFlow.Repositorios.RepositorioProductos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +20,14 @@ public class GestionProductos {
         return repositorio.findById(id);
     }
 
-    public Producto findByNombre(String nombre) {
+    public List<Producto> findByNombre(String nombre) {
+        List<Producto> productosConNombre=new ArrayList<>();
         for (Producto aux: repositorio.findAll()){
-            if (aux.getNombre().toLowerCase().equals(nombre.toLowerCase())){
-                return aux;
+            if (aux.getNombre().toLowerCase().contains(nombre.toLowerCase())){
+                productosConNombre.add(aux);
             }
         }
-        return null;
-    }
-    public long getIDbyNombre(String nombre){
-        return this.findByNombre(nombre).getId();
+        return productosConNombre;
     }
 
     public void update(){repositorio.flush();}
@@ -57,4 +57,4 @@ public class GestionProductos {
         }
         return listaDisponibles;
     }
-
+}
