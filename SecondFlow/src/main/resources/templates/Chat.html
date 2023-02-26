@@ -7,6 +7,50 @@
 </head>
 <body>
 
+<form method="post" action="/producto/vendido/{{producto.id}}/{{idComprador}}"enctype="multipart/form-data">
+    <p>He decidido vender el producto</p>
+    <input type="submit" value='Vender'>
+</form>
 
+<ul>
+    {{#conversacionAbierta.listaMensajes}}
+    <li>
+        <#mensaje.idEmisor as conversacionAbierta.emisor>
+        <div style="text-align: end">
+        {{fecha}}
+        {{texto}}
+        <br>
+        </div>
+        <#else>
+
+        {{fecha}}
+        {{texto}}
+        <br>
+    </li>
+    {{/conversacionAbierta.listaMensajes}}
+</ul>
+
+
+
+<form method="post" action="/conversacion/{{conversacion.id}}/Enviado">
+    <label>
+        <textarea placeholder="Escriba su mensaje"
+                  name='textoMensaje' cols="40" rows="5" required></textarea>
+    </label>
+    <input type="submit" value='Enviar'>
+</form>
+
+
+<br>
+<div style="text-align: center">
+<h2>Mis otras conversaciones</h2>
+</div>
+<ul>
+    {{#listaConversaciones}}
+    <li>
+
+    </li>
+    {{/listaConversaciones}}
+</ul>
 </body>
 </html>
