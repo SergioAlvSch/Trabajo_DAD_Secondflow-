@@ -1,5 +1,7 @@
-package es.SecondFlow;
+package es.SecondFlow.Servicios;
 
+import es.SecondFlow.Repositorios.RepositorioUsuarios;
+import es.SecondFlow.Entidades.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +25,8 @@ public class GestionUsuarios {
         }
         return null;
     }
-    public long getIDbyNombre(String nombre){
-        return this.findByNombre(nombre).getId();
-    }
 
     public void update(){repositorioUsuarios.flush();}
-
 
     public boolean exist(long id) {
         return repositorioUsuarios.existsById(id);
