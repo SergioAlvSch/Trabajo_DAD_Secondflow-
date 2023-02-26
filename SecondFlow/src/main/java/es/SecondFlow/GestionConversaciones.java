@@ -16,6 +16,15 @@ public class GestionConversaciones {
         return repositorio.findById(id);
     }
 
+    public Conversacion findByUsuarios(Usuario usuario1,Usuario usuario2,Producto producto) {
+        for (Conversacion aux: repositorio.findAll()){
+            if ((aux.getEmisor().equals(usuario1)&&aux.getReceptor().equals(usuario2)&&aux.getProducto()==producto)){
+                return aux;
+            }
+        }
+        return null;
+    }
+
     public void update(){repositorio.flush();}
 
     public boolean exist(long id) {
