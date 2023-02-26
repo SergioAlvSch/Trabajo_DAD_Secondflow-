@@ -13,6 +13,7 @@
     <ul>
         {{#usuario.listaProductos}}
         <li>
+            {{^hayComprador}}
             <a href="/productos/{{id}}">
                 <h3>{{nombre}} </h3>
             </a>
@@ -22,6 +23,7 @@
             <p>{{precio}}</p><br>
             <strong>- Descripción: </strong>
             <p>{{descripcion}}</p>
+            {{/hayComprador}}
         </li>
         {{/usuario.listaProductos}}
     </ul>
