@@ -30,6 +30,8 @@ public class Producto {
 
     @ManyToOne
     private Usuario comprador;
+    
+    private boolean hayComprador;
 
     protected Producto() {
     }
@@ -121,6 +123,13 @@ public class Producto {
         this.comprador = comprador;
     }
 
+    public Boolean isComprador() {
+        return hayComprador;
+    }
+
+    public void setHayComprador() {
+        this.hayComprador=true;
+    }
 
     @Override
     public String toString() {
@@ -132,4 +141,3 @@ public class Producto {
                 ", precio=" + precio +
                 '}';
     }
-}
