@@ -8,6 +8,10 @@
     <h1>Mi Perfil</h1>
     <h2>Nombre: {{usuario.nombreUsuario}}</h2>
 
+    <form action='/productos/Comprados/{{usuario.id}}'> Ver historial de compras
+        <input type='submit' value='Mi Historial de compras'>
+    </form>
+
     <h2>Lista de producto: </h2>
 
     <ul>
@@ -15,18 +19,20 @@
         <li>
             {{^hayComprador}}
             <a href="/productos/{{id}}">
+                {{#producto.hayImagen}}
+                <img src="/producto/{{producto.id}}/image" height="400" width="500">
+                {{/producto.hayImagen}}
+
+                {{^producto.hayImagen}}
+                <img src=/productoGenerico.png>
+                {{/producto.hayImagen}}
                 <h3>{{nombre}} </h3>
             </a>
-            <strong>- Categoria: </strong>
-            <p>{{categoria}} </p> <br>
-            <strong>- Precio: </strong>
-            <p>{{precio}}</p><br>
-            <strong>- Descripción: </strong>
-            <p>{{descripcion}}</p>
             {{/hayComprador}}
         </li>
         {{/usuario.listaProductos}}
     </ul>
+
 </div>
 </body>
 {{>PieDePagina}}
