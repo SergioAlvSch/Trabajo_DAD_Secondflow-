@@ -1,5 +1,7 @@
-package es.SecondFlow;
+package es.SecondFlow.Controladores;
 
+import es.SecondFlow.Entidades.*;
+import es.SecondFlow.Servicios.*;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -12,15 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URI;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @Controller
 public class SecondFlowController {
@@ -30,19 +28,23 @@ public class SecondFlowController {
 
     @Autowired
     private GestionUsuarios gestionUsuarios;
-    
+
     @Autowired
     private GestionConversaciones gestionConversaciones;
-
     @Autowired
-    Usuario usuarioComprador;
-
-    @Autowired
-    Usuario usarioVendedor;
+    private GestionMensajes gestionMensajes;
 
     @GetMapping("/")
     public String mostrarPaginaPrincipal(Model model) {
+/*
 
+        //LUGAR DONDE PONEMOS LOS USUARIOS POR DEFECTO, SOLO SE HARÁ EN LA PRIMERA VEZ
+        Usuario comprador=new Usuario("juan");
+        Usuario vendedor=new Usuario("pepe");
+        gestionUsuarios.save(comprador);
+        gestionUsuarios.save(vendedor);
+        gestionUsuarios.update();
+*/
         Optional<Usuario> u = gestionUsuarios.findById(1);
         mostrarListaProductos(model);
         model.addAttribute("usuario", u.get());
@@ -57,13 +59,15 @@ public class SecondFlowController {
             model.addAttribute("usuario", u.get());
             return "Perfil";
         } else {
-            return "inicio";
+            model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+            return "Inicio";
         }
     }
 
-    @GetMapping("/buscar/{nombre}")
-    public String busqueda(Model model, @PathVariable String nombre) {
-        model.addAttribute("misProductos", gestionProductos.findByNombre(nombre));
+    @RequestMapping("/buscar")
+    public String busqueda(Model model, String nombreProductoABuscar) {
+        model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+        model.addAttribute("listaProductos", gestionProductos.findByNombre(nombreProductoABuscar));
         return "Inicio";
     }
 
@@ -72,6 +76,18 @@ public class SecondFlowController {
     public String mostrarListaProductos(Model model) {
         model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
         return "productos";
+    }
+
+    @GetMapping("/productos/Comprados/{id}")
+    public String mostrarHistorialCompras(Model model, @PathVariable long id) {
+        Optional<Usuario> aux = gestionUsuarios.findById(id);
+        if (aux.isPresent()) {
+            model.addAttribute("usuario", aux.get());
+            model.addAttribute("listaProductos", aux.get().getListaProductosComprados());
+            return "MiListaProductosComprados";
+        }
+        model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+        return "Inicio";
     }
 
 
@@ -88,29 +104,31 @@ public class SecondFlowController {
             return "productos";
         }
     }
+
     @GetMapping("/comprar/producto/{id}")
     public String comprarProducto(Model model, @PathVariable long id) {
-        
+
         Optional<Producto> p = gestionProductos.findById(id);
 
         if (p.isPresent()) {
-            Usuario vendedor=p.get().getVendedor();
-            Optional<Usuario> comprador =gestionUsuarios.findById(1);
+            Usuario vendedor = p.get().getVendedor();
+            Optional<Usuario> comprador = gestionUsuarios.findById(1);
             model.addAttribute("producto", p.get());
-            Conversacion c = gestionConversaciones.findByUsuarios(comprador.get(),vendedor,p.get());
-            if(c==null){
-                c= new Conversacion(comprador.get(),vendedor,p.get());
+            Conversacion c = gestionConversaciones.findByUsuarios(comprador.get(), vendedor, p.get());
+            if (c == null) {
+                c = new Conversacion(comprador.get(), vendedor, p.get());
                 gestionConversaciones.save(c);
-                comprador.get().listaMisConversacionesE.add(c);
-                vendedor.listaMisConversacionesR.add(c);
+                comprador.get().getListaMisConversacionesE().add(c);
+                vendedor.getListaMisConversacionesR().add(c);
                 gestionUsuarios.update();
             }
-            List<Conversacion>auxConversaciones=new ArrayList<>();
-            auxConversaciones.addAll(comprador.get().listaMisConversacionesE);
-            auxConversaciones.addAll(comprador.get().listaMisConversacionesR);
+            List<Conversacion> auxConversaciones = new ArrayList<>();
+            auxConversaciones.addAll(comprador.get().getListaMisConversacionesE());
+            auxConversaciones.addAll(comprador.get().getListaMisConversacionesR());
             model.addAttribute("listaConversaciones", auxConversaciones);
             model.addAttribute("conversacionAbierta", c);
-            model.addAttribute("idComprador",comprador.get().getId());
+            model.addAttribute("listaMensajes", c.getListaMensajes());
+            model.addAttribute("idComprador", comprador.get().getId());
             return "Chat";
         } else {
             model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
@@ -119,15 +137,15 @@ public class SecondFlowController {
     }
 
     @RequestMapping("/producto/vendido/{id}/{idComprador}")
-    public String productoVendido(Model model,@PathVariable long id,@PathVariable long idComprador){
+    public String productoVendido(Model model, @PathVariable long id, @PathVariable long idComprador) {
         Optional<Producto> p = gestionProductos.findById(id);
-        if (p.isPresent()){
-            Usuario vendedor= p.get().getVendedor();
-            Optional<Usuario> comprador =gestionUsuarios.findById(idComprador);
-            if (comprador.isPresent()){
-                comprador.get().listaMisProductosComprados.add(p.get());
+        if (p.isPresent()) {
+            Usuario vendedor = p.get().getVendedor();
+            Optional<Usuario> comprador = gestionUsuarios.findById(idComprador);
+            if (comprador.isPresent()) {
+                comprador.get().getListaProductosComprados().add(p.get());
                 p.get().setHayComprador();
-                vendedor.listaMisProductos.remove(p.get());
+                vendedor.getListaProductos().remove(p.get());
                 p.get().setComprador(comprador.get());
                 gestionProductos.delete(p.get().getId());
                 gestionUsuarios.update();
@@ -136,6 +154,7 @@ public class SecondFlowController {
                 return "productoVendido";
             }
         }
+        model.addAttribute("usuario", gestionUsuarios.findById(1).get());
         return "Inicio";
     }
 
@@ -145,6 +164,10 @@ public class SecondFlowController {
         Optional<Producto> producto = gestionProductos.findById(id);
         if (producto.isPresent()) {
             model.addAttribute("producto", producto.get());
+            List<Conversacion> conversacionesAsociadas = gestionConversaciones.findByProducto(producto.get());
+            for (Conversacion aux : conversacionesAsociadas) {
+                gestionConversaciones.delete(aux.getId());
+            }
             gestionProductos.delete(id);
             return "productoeliminado";
         } else {
@@ -177,8 +200,6 @@ public class SecondFlowController {
             producto.get().setCategoria(categoriaProducto);
             producto.get().setPrecio(precioProducto);
             producto.get().setDescripcion(descripcionProducto);
-            Usuario vendedor = producto.get().getVendedor();
-
             try {
                 updateImage(producto.get(), removeImage, imageField);
             } catch (SQLException e) {
@@ -203,7 +224,7 @@ public class SecondFlowController {
             p.setImagenProducto(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
             p.setHayImagen(true);
         }
-        vendedor.listaMisProductos.add(p);
+        vendedor.getListaProductos().add(p);
         model.addAttribute("producto", p);
         gestionProductos.save(p);
         return "producto";
@@ -253,32 +274,56 @@ public class SecondFlowController {
         }
     }
 
-    @GetMapping("/conversaciones")
-    public String mostrarListaConversaciones(Model model) {
-        model.addAttribute("listaConversaciones", gestionProductos.findAll());
-        return "conversaciones";
+    @GetMapping("/conversaciones/{id}")
+    public String mostrarListaConversaciones(Model model, @PathVariable long id) {
+        Optional<Usuario> aux = gestionUsuarios.findById(id);
+        if (aux.isPresent()) {
+            List<Conversacion> auxConversaciones = new ArrayList<>();
+            auxConversaciones.addAll(aux.get().getListaMisConversacionesE());
+            auxConversaciones.addAll(aux.get().getListaMisConversacionesR());
+            model.addAttribute("listaConversaciones", auxConversaciones);
+            return "ListaConversaciones";
+        }
+        model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+        return "Inicio";
     }
 
 
-    @RequestMapping("/conversaciones/{id}/Enviado/{idEmisor}")
-    public String getConversación(Model model, @PathVariable long id,String mensaje,@PathVariable long idEmisor) {
+    @RequestMapping("/conversacion/{id}/Enviado/{idEmisor}")
+    public String getConversación(Model model, @PathVariable long id, String mensaje, @PathVariable long idEmisor) {
 
 
-        Optional<Producto> p = gestionProductos.findById(id);
+        Optional<Conversacion> conversacion = gestionConversaciones.findById(id);
 
-        if (p.isPresent()) {
-            Usuario vendedor=p.get().getVendedor();
-            Optional<Usuario> comprador =gestionUsuarios.findById(1);
-            model.addAttribute("producto", p.get());
+        if (conversacion.isPresent()) {
+            Mensaje nuevoMensaje = new Mensaje(mensaje, LocalDateTime.now(), idEmisor, conversacion.get());
+            gestionMensajes.save(nuevoMensaje);
+            conversacion.get().getListaMensajes().add(nuevoMensaje);
+            gestionConversaciones.update();
+            gestionMensajes.update();
+            Producto p = conversacion.get().getProducto();
 
-            Conversacion c = gestionConversaciones.findByUsuarios(comprador.get(),vendedor,p.get());
+            Optional<Usuario> usuarioEmisor = gestionUsuarios.findById(idEmisor);
+            if (usuarioEmisor.isPresent()) {
+                List<Conversacion> auxConversaciones = new ArrayList<>();
+                auxConversaciones.addAll(usuarioEmisor.get().getListaMisConversacionesE());
+                auxConversaciones.addAll(usuarioEmisor.get().getListaMisConversacionesR());
+                model.addAttribute("producto", p);
+                model.addAttribute("idComprador", idEmisor);
+                model.addAttribute("conversacionAbierta", conversacion.get());
+                model.addAttribute("listaMensajes", conversacion.get().getListaMensajes());
+                model.addAttribute("listaConversaciones", auxConversaciones);
 
-            Mensaje nuevoMensaje=new Mensaje(mensaje, LocalDateTime.now(),idEmisor);
-            model.addAttribute("conversacion", nuevoMensaje);
-            return "conversacion";
+                return "Chat";
+            }
+
+            model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+            return "Inicio";
+
+
         } else {
-            model.addAttribute("listaConversaciones", gestionProductos.findAllDisponibles());
-            return "conversacion";
+            model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+            return "Inicio";
         }
     }
 }
