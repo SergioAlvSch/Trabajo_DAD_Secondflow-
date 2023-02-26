@@ -1,6 +1,4 @@
-package es.SecondFlow;
-
-import org.springframework.web.multipart.MultipartFile;
+package es.SecondFlow.Entidades;
 
 import javax.persistence.*;
 import java.sql.Blob;
@@ -141,3 +139,4 @@ public class Producto {
                 ", precio=" + precio +
                 '}';
     }
+}
