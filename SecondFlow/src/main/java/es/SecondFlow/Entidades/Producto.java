@@ -43,15 +43,6 @@ public class Producto {
         this.vendedor = vendedor;
     }
 
-    public Producto(String nombre, String categoria, String descripcion, double precio, Blob imagenProducto) {
-        super();
-        this.nombre = nombre;
-        this.categoria = categoria;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.imagenProducto = imagenProducto;
-    }
-
 
     public Blob getImagenProducto() {
         return imagenProducto;
@@ -121,7 +112,7 @@ public class Producto {
         this.comprador = comprador;
     }
 
-    public Boolean isComprador() {
+    public Boolean isHayComprador() {
         return hayComprador;
     }
 
