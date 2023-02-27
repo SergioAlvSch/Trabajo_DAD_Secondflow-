@@ -71,7 +71,6 @@ Formulario para editar un articulo previamente puesto en venta para su modificac
 <div align="center">
 <h3> Compra de un artículo </h3>
 <img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/conversacionPreCompra.jpg" alt="android" width="550" height="300"/> </div>
-<div align="justify">
 Al seleccionar comprar un articulo desde la vista de su visualización se accede al chat donde se establece el dialogo comprador-vendedor, donde este último puede acceder a vender el articulo.
 
 
@@ -79,26 +78,34 @@ Al seleccionar comprar un articulo desde la vista de su visualización se accede
 <div align="center">
 <h3> Perfil de usuario </h3>
 <img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/pantalla%20perfil.jpg" alt="android" width="550" height="300"/> </div>
-<div align="justify">
 Ventana donde aparece informacion principal de un usuario como su nombre, sus productos en venta y un hipervinculo al historial de compra
 
 
 <div align="center">
 <h3> Historial de compra </h3>
-<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/pantalla%20perfil.jpg" alt="android" width="550" height="300"/> </div>
-<div align="justify">
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/historialCompras.jpg" alt="android" width="550" height="300"/> </div>
 Pagina donde figurarán los articulos adquiridos por un usuario concreto
 
-
+<div align="center">
 <h3> Bandeja de conversaciones</h3>
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/bandejaConversaciones.jpg" alt="android" width="550" height="300"/> </div>
 Pantalla donde se podrá acceder a las distintas conversaciones que tenga uno abiertas
 
 
 
 <h2> Diagrama de navegación </h2>
-
+<div align="center">
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/diagramaNavegacion.png" alt="android" width="550" height="300"/> </div>
+  
 <h2> Modelo de datos </h2>
 
 <h3> Diagrama de clases UML </h3>
+  <div align="center">
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/SecondFlowUML_Fase2.png" alt="android" width="800" height="500"/> </div>
 
 <h3> Diagrama Entidad/Relación </h3>
+<div align="center">
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/entidades%20base%20de%20datos.png" alt="android" width="550" height="300"/> </div>
+  
+  <div align="center">
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/relacionesEntidades.png" alt="android" width="550" height="300"/> </div>
