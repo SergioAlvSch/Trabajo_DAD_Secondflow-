@@ -13,7 +13,6 @@ Eduard Vasile Stancu
 
 
 <h1> Fase 1 </h1>
-
 <h2>Descripción:</h2>
 Se trata de una web de compra/venta de artículos de segunda mano entre particulares.
 
@@ -29,3 +28,16 @@ Se trata de una web de compra/venta de artículos de segunda mano entre particul
 
 <h2>Funcionalidades del servicio Interno:</h2>
 Mensajería entre usuarios y envió de correo de confirmación de creación de cuenta y confirmación transacciones.
+
+
+<h1> Fase 2 </h1>
+
+<h2> Pantallas principales </h2>
+
+<h2> Diagrama de navegación </h2>
+
+<h2> Modelo de datos </h2>
+
+<h3> Diagrama de clases UML </h3>
+
+<h3> Diagrama Entidad/Relación </h3>
