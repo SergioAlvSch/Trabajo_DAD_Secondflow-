@@ -10,6 +10,11 @@ Eduard Vasile Stancu
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#entidades">-&nbsp &nbsp Entidades </a>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#funcionalidades">-&nbsp &nbsp Funcionalidades </a>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#funcionalidades-del-servicio-interno">-&nbsp &nbsp Funcionalidad servicio interno </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/tree/main#-fase-2-"> Fase 2  </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/tree/main#-pantallas-principales-">-&nbsp &nbsp Pantallas principales  </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/tree/main#-diagrama-de-navegaci%C3%B3n-">-&nbsp &nbsp Digrama de navegacion </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/tree/main#-diagrama-de-clases-uml-">-&nbsp &nbsp Diagrama de clases uml </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/tree/main#-diagrama-entidadrelaci%C3%B3n-">-&nbsp &nbsp Diagrama Entidad/Relacion </a>
 
 
 <h1 align="center"> Fase 1 </h1>
@@ -19,8 +24,8 @@ Se trata de una web de compra/venta de artículos de segunda mano entre particul
 <h2>Entidades:</h2>
 <strong>-&nbspUSUARIO:&nbsp &nbsp</strong> Representara a las personas registradas en la pagina.
 <br><strong>-&nbspPRODUCTO:&nbsp &nbsp</strong> Representa los artículos subidos a la plataforma por parte de los usuarios.
-<br><strong>-&nbspTRANSACCIONES:&nbsp &nbsp</strong> Representa las compras y las ventas de los productos.
-<br><strong>-&nbspCHAT/CONVERSACIONES:&nbsp &nbsp</strong> Representa el apartado de interacción entre dos usuarios.
+<br><strong>-&nbspMENSAJES:&nbsp &nbsp</strong> Representa los mensajes que se envian entre usuarios cuando quieren realizar una compra.
+<br><strong>-&nbspCONVERSACIONES:&nbsp &nbsp</strong> Representa el conjunto de Chats entre usuarios con su correspondiente lista de mesajes.
 
 <h2>Funcionalidades:</h2>
 <strong>-&nbspPÚBLICAS:&nbsp &nbsp</strong> visualizar productos y perfiles de usuarios.
@@ -105,7 +110,7 @@ Pantalla donde se podrá acceder a las distintas conversaciones que tenga uno ab
 
 <h3> Diagrama Entidad/Relación </h3>
 <div align="center">
-<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/entidades%20base%20de%20datos.png" alt="android" width="550" height="300"/> </div>
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/entidades%20base%20de%20datos.png" alt="android" width="450" height="300"/> </div>
   
   <div align="center">
 <img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/relacionesEntidades.png" alt="android" width="550" height="300"/> </div>
