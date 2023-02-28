@@ -1,5 +1,6 @@
 # Trabajo_DAD_Secondflow
 Trabajo pagina web Diseño de Aplicaciones Distribuidas URJC 2023
+<div align="center"><img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/logo.png"width="500" height="300"/> </div>
 <h2>Miembros:</h2>
 Sergio Alvarez Scharfhausen<br>
 Martin Alami Mochi<br>
