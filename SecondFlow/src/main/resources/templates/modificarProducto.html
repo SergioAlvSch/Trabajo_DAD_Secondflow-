@@ -10,11 +10,7 @@
     <h1>Formulario de modificar producto</h1>
     <h3>Rellene los siguientes campos:</h3>
 
-    {{#producto.hayImagen}}
-    <img src="/producto/{{producto.id}}/image" height="400" width="500"><br>
-    <input type='checkbox' name='removeImage'> <label>Eliminar Imagen</label><br>
-    <label>Update image: </label><br>
-    {{/producto.hayImagen}}
+
 
     {{^producto.hayImagen}}
     <img src=/productoGenerico.png height="400" width="500"><br>
@@ -24,6 +20,13 @@
 
 
     <form method="post" action="//localhost:8080/modificado/{{producto.id}}"enctype="multipart/form-data">
+        
+        {{#producto.hayImagen}}
+        <img src="/producto/{{producto.id}}/image" height="400" width="500"><br>
+        <input type='checkbox' name='removeImage'> <label>Eliminar Imagen</label><br>
+        <label>Update image: </label><br>
+        {{/producto.hayImagen}}
+
         <label>
             - Imagen: <input type='file' name='imageField' accept=".png">
         </label><br><br>
@@ -63,7 +66,7 @@
         <input type="submit" value='modificar'>
     </form>
     <br>
-    
+
 </div>
 
 {{>PieDePagina}}
