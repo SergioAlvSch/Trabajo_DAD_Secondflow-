@@ -21,22 +21,58 @@ public class Usuario {
     @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Conversacion> listaMisConversacionesR;
     String nombreUsuario;
+
+    String clave;
+
+    String correo;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
 
-    public Usuario(String nombreUsuario) {
+    public Usuario(String nombreUsuario, String clave,String correo, String... roles) {
         super();
         this.nombreUsuario = nombreUsuario;
+        this.clave= clave;
+        this.roles= List.of(roles);
         this.listaMisProductosComprados= new ArrayList<>();
         this.listaMisConversacionesR = new ArrayList<>();
         this.listaMisConversacionesE = new ArrayList<>();
         this.listaMisProductos = new ArrayList<>();
+        this.correo=correo;
     }
 
     public Usuario() {
 
+    }
+
+
+
+    public String getClave() {
+        return clave;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
     public List<Producto> getListaProductos() {
@@ -62,4 +98,5 @@ public class Usuario {
     public List<Conversacion> getListaMisConversacionesR() {
         return listaMisConversacionesR;
     }
+
 }
