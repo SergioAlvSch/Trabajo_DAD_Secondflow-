@@ -326,6 +326,12 @@ public class SecondFlowController {
             return "Inicio";
         }
     }
+
+    @RequestMapping("/login")
+    public String login(){return "login";}
+
+    @RequestMapping("/loginError")
+    public String loginError(){return "loginError";}
 }
 
 
