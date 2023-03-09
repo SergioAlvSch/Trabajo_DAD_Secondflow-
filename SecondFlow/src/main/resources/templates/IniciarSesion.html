@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+{{>Cabecera}}
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+<div style="background-color: #c9ffff" align = "center">
+
+<form role='form' method="post" action="">
+    <label>
+        Nombre: <input type='text' name='nombreUsuario' placeholder="Introduzca nombre de usuario" autocomplete="on"
+                       required>
+    </label><br><br>
+
+    <label>
+        Clave: <input type='password' name='claveUsuario' placeholder="Introduzca su contraseña" required>
+    </label><br><br>
+
+
+
+    <input type="reset" value='Borrar'/>
+    <input type="submit" value='Iniciar Sesión'>
+
+    <a href='Set_In.html'>No tengo cuenta, Registrarse </a>
+    <a href='#'>He olvidado la contraseña </a>
+</form>
+</div>
+</body>
+</html>
+{{>PieDePagina}}
