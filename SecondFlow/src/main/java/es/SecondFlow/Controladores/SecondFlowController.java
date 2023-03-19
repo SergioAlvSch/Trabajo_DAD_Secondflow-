@@ -1,33 +1,44 @@
 package es.SecondFlow.Controladores;
 
+import antlr.Token;
 import es.SecondFlow.Entidades.*;
 import es.SecondFlow.Servicios.*;
+import org.hibernate.Session;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.Principal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Controller
 public class SecondFlowController {
+
+    CsrfToken token;
 
     @Autowired
     private GestionProductos gestionProductos;
 
     @Autowired
     private GestionUsuarios gestionUsuarios;
+    private Usuario usuarioLogeado;
 
     @Autowired
     private GestionConversaciones gestionConversaciones;
@@ -35,19 +46,34 @@ public class SecondFlowController {
     private GestionMensajes gestionMensajes;
 
     @GetMapping("/")
-    public String mostrarPaginaPrincipal(Model model) {
-/*
-
-        //LUGAR DONDE PONEMOS LOS USUARIOS POR DEFECTO, SOLO SE HARÁ EN LA PRIMERA VEZ
-        Usuario comprador=new Usuario("juan");
-        Usuario vendedor=new Usuario("pepe");
-        gestionUsuarios.save(comprador);
-        gestionUsuarios.save(vendedor);
-        gestionUsuarios.update();
-*/
-        Optional<Usuario> u = gestionUsuarios.findById(1);
+    public String mostrarPaginaPrincipalSinSesion(Model model) {
         mostrarListaProductos(model);
-        model.addAttribute("usuario", u.get());
+        if(usuarioLogeado!=null) {
+
+            model.addAttribute("logged", true);
+            model.addAttribute("admin", model.getAttribute("admin"));
+            model.addAttribute("usuario",usuarioLogeado);
+             return "Inicio";
+        }
+        model.addAttribute("logged", false);
+
+
+        return "InicioSinSesion";
+    }
+
+    @GetMapping("/Inicio")
+    public String mostrarPaginaPrincipal(Model model, HttpServletRequest request) {
+        Principal usuario = request.getUserPrincipal();
+        mostrarListaProductos(model);
+        if (usuario == null) {
+            return "InicioSinSesion";
+        }
+        model.addAttribute("logged", true);
+        model.addAttribute("admin", request.isUserInRole("ADMIN"));
+        usuarioLogeado = gestionUsuarios.findByNombre(usuario.getName());
+        model.addAttribute("usuario", usuarioLogeado);
+
+
         return "Inicio";
     }
 
@@ -59,14 +85,13 @@ public class SecondFlowController {
             model.addAttribute("usuario", u.get());
             return "Perfil";
         } else {
-            model.addAttribute("usuario", gestionUsuarios.findById(1).get());
-            return "Inicio";
+            return "InicioSinSesion";
         }
     }
 
     @RequestMapping("/buscar")
     public String busqueda(Model model, String nombreProductoABuscar) {
-        model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+        model.addAttribute("usuario", usuarioLogeado);
         model.addAttribute("listaProductos", gestionProductos.findByNombre(nombreProductoABuscar));
         return "Inicio";
     }
@@ -86,7 +111,7 @@ public class SecondFlowController {
             model.addAttribute("listaProductos", aux.get().getListaProductosComprados());
             return "MiListaProductosComprados";
         }
-        model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+        model.addAttribute("usuario", usuarioLogeado);
         return "Inicio";
     }
 
@@ -112,23 +137,23 @@ public class SecondFlowController {
 
         if (p.isPresent()) {
             Usuario vendedor = p.get().getVendedor();
-            Optional<Usuario> comprador = gestionUsuarios.findById(1);
+            Usuario comprador = usuarioLogeado;
             model.addAttribute("producto", p.get());
-            Conversacion c = gestionConversaciones.findByUsuarios(comprador.get(), vendedor, p.get());
+            Conversacion c = gestionConversaciones.findByUsuarios(comprador, vendedor, p.get());
             if (c == null) {
-                c = new Conversacion(comprador.get(), vendedor, p.get());
+                c = new Conversacion(comprador, vendedor, p.get());
                 gestionConversaciones.save(c);
-                comprador.get().getListaMisConversacionesE().add(c);
+                comprador.getListaMisConversacionesE().add(c);
                 vendedor.getListaMisConversacionesR().add(c);
                 gestionUsuarios.update();
             }
             List<Conversacion> auxConversaciones = new ArrayList<>();
-            auxConversaciones.addAll(comprador.get().getListaMisConversacionesE());
-            auxConversaciones.addAll(comprador.get().getListaMisConversacionesR());
+            auxConversaciones.addAll(comprador.getListaMisConversacionesE());
+            auxConversaciones.addAll(comprador.getListaMisConversacionesR());
             model.addAttribute("listaConversaciones", auxConversaciones);
             model.addAttribute("conversacionAbierta", c);
             model.addAttribute("listaMensajes", c.getListaMensajes());
-            model.addAttribute("idComprador", comprador.get().getId());
+            model.addAttribute("idComprador", comprador.getId());
             return "Chat";
         } else {
             model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
@@ -154,7 +179,7 @@ public class SecondFlowController {
                 return "productoVendido";
             }
         }
-        model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+        model.addAttribute("usuario", usuarioLogeado);
         return "Inicio";
     }
 
@@ -217,14 +242,14 @@ public class SecondFlowController {
     @RequestMapping("/NuevoProducto")
     public String crearProducto(Model model, String nombreProducto, String categoriaProducto, String descripcionProducto, double precioProducto, MultipartFile imageField) throws IOException {
 
-        Usuario vendedor = gestionUsuarios.findById(2).get();
-        Producto p = new Producto(nombreProducto, categoriaProducto, descripcionProducto, precioProducto, vendedor);
+
+        Producto p = new Producto(nombreProducto, categoriaProducto, descripcionProducto, precioProducto, usuarioLogeado);
 
         if (!imageField.isEmpty()) {
             p.setImagenProducto(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
             p.setHayImagen(true);
         }
-        vendedor.getListaProductos().add(p);
+        usuarioLogeado.getListaProductos().add(p);
         model.addAttribute("producto", p);
         gestionProductos.save(p);
         return "producto";
@@ -240,7 +265,7 @@ public class SecondFlowController {
                 producto.setImagenProducto(null);
                 producto.setHayImagen(false);
             } else {
-                // Maintain the same image loading it before updating the book
+                // Maintain the same image loading it before updating the product
                 Producto dbProducto = gestionProductos.findById(producto.getId()).orElseThrow();
                 if (dbProducto.isHayImagen()) {
                     producto.setImagenProducto(BlobProxy.generateProxy(dbProducto.getImagenProducto().getBinaryStream(),
@@ -284,7 +309,7 @@ public class SecondFlowController {
             model.addAttribute("listaConversaciones", auxConversaciones);
             return "ListaConversaciones";
         }
-        model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+        model.addAttribute("usuario", usuarioLogeado);
         return "Inicio";
     }
 
@@ -317,21 +342,59 @@ public class SecondFlowController {
                 return "Chat";
             }
 
-            model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+            model.addAttribute("usuario", usuarioLogeado);
             return "Inicio";
 
 
         } else {
-            model.addAttribute("usuario", gestionUsuarios.findById(1).get());
+            model.addAttribute("usuario", usuarioLogeado);
             return "Inicio";
         }
     }
 
     @RequestMapping("/login")
-    public String login(){return "login";}
+    public String login() {
+        return "IniciarSesion";
+    }
+
+    @GetMapping("/registrarse")
+    public String irARegistrarse(Model model) {
+        model.addAttribute("nombreTemp", "");
+        model.addAttribute("correoTemp", "");
+        model.addAttribute("passwordTemp", "");
+        model.addAttribute("password2Temp", "");
+        model.addAttribute("errorNombre", false);
+        model.addAttribute("errorClave", false);
+        return "Registrarse";
+    }
+
+    @RequestMapping("/registrado")
+    public String registrado(Model model, String nombreUsuario, String passwordUsuario, String password2Usuario, String correoUsuario) {
+        if (password2Usuario == passwordUsuario && gestionUsuarios.findByNombre(nombreUsuario) == null) {
+            Usuario registrado = new Usuario(nombreUsuario, password2Usuario, correoUsuario, "USER");
+            gestionUsuarios.save(registrado);
+            //Todo:enviarCorreo
+
+            return "InicioSinSesion";
+        }
+        if (password2Usuario != passwordUsuario) {
+            model.addAttribute("errorClave", true);
+        } else {
+            model.addAttribute("passwordTemp", passwordUsuario);
+            model.addAttribute("password2Temp", password2Usuario);
+        }
+        if (gestionUsuarios.findByNombre(nombreUsuario) != null) {
+            model.addAttribute("errorNombre", true);
+        }
+        model.addAttribute("correoTemp", correoUsuario);
+        model.addAttribute("nombreTemp", nombreUsuario);
+        return "Registrarse";
+    }
 
     @RequestMapping("/loginError")
-    public String loginError(){return "loginError";}
+    public String loginError() {
+        return "loginError";
+    }
 }
 
 
