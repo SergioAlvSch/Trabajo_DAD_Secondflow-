@@ -1,12 +1,49 @@
 <html xmlns="http://www.w3.org/1999/html" xmlns="" xmlns="">
 <div style="text-align: center;">
     <header>
+        <style>
+            .alert {
+                padding: 20px;
+                background-color: #f44336;
+                color: white;
+            }
+
+            .closebtn {
+                margin-left: 15px;
+                color: white;
+                font-weight: bold;
+                float: right;
+                font-size: 22px;
+                line-height: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            .closebtn:hover {
+                color: black;
+            }
+        </style>
         <div style="background: black">
             <font COLOR="#add8e6">
                 <h1>SECOND FLOW</h1>
                 <h4>Página de compra - venta de productos</h4>
             </font>
             <a type="image" href="/"><img src="/logo.png" width="400" height="200"></a>
+            {{^logged}}
+            <form action='/login'>- Iniciar Sesion
+                <input type='submit' value='Iniciar Sesion'>
+                <input type="hidden" name="_csrf" value="{{token}}" />
+
+            </form>
+            {{/logged}} {{#logged}}
+
+            <form action="/logout" method="post">
+                <button type="submit">Log Out</button>
+                <input type="hidden" name="_csrf" value="{{token}}" />
+            </form>
+            {{/logged}}
         </div>
+
+
     </header>
 </div>
