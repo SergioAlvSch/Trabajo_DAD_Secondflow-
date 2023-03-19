@@ -1,29 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+{{>Cabecera}}
 <head>
     <meta charset="UTF-8">
     <title>Registrarse</title>
 </head>
 <body>
 <div style="background-color: #c9ffff">
-<form role='form' method="post" action="">
-    <label>
-        Nombre: <input type='text' name='nombreUsuario' placeholder="Introduzca un nombre como usuario" autocomplete="on"  required>
-    </label><br><br>
-    <label>
-        Password: <input type='password' name='passwordUsuario' placeholder="Introduzca contraseña" required>
-    </label><br><br>
-    <label>
-        Password: <input type='password' name='password2Usuario' placeholder="Vuelva a Introduzca contraseña" required>
-    </label><br><br>
-    <label>
-        - Email: <input type='email' name='correoUsuario' pattern="[a-z0-9._]+(@gmail+\.|@hotmail+\.|@alumnos.urjc+\.)+(com|es|org)$" placeholder="Nombre del producto" autocomplete="on"
-                        required>
-    </label><br><br>
-
-    <a href='Log_In.html'>Ya tengo cuenta, Iniciar Sesion </a>
-
-</form>
+    <div style="text-align: center">
+        <h1>Registrarse</h1>
+    </div>
+    {{#errorNombre}}
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>El usuario introducido ya existe</strong>
+    </div>
+    {{/errorNombre}}
+    {{#errorClave}}
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Las contraseñas introducidas no coinciden</strong>
+    </div>
+    {{/errorClave}}
+    <form method="post" action="/">
+        <label>
+            Nombre: <input type='text' name='nombreUsuario' value="{{nombreTemp}}" style=""
+                           placeholder="Introduzca un nombre como usuario"
+                           autocomplete="on" required>
+        </label><br><br>
+        <label>
+            - Email: <input type='email' name='correoUsuario' value="{{correoTemp}}"
+                            pattern="[a-z0-9._]+(@gmail+\.|@hotmail+\.|@alumnos.urjc+\.)+(com|es|org)$"
+                            placeholder="Nombre del producto" autocomplete="on"
+                            required>
+        </label><br><br>
+        <label>
+            Password: <input type='password' name='passwordUsuario' value="{{passwordTemp}}"
+                             placeholder="Introduzca contraseña" required>
+        </label><br><br>
+        <label>
+            Repetición Password: <input type='password' value="{{password2Temp}}" name='password2Usuario'
+                                        placeholder="Repita la contraseña" required>
+        </label><br><br>
+        <input type="reset" value='Borrar' style="color: red"/>
+        <input type="submit" value='Registrar'><br><br>
+        <a href='/login'>Ya tengo cuenta, Iniciar Sesion </a>
+    </form>
 </div>
 </body>
-</html>
+{{>PieDePagina}}
