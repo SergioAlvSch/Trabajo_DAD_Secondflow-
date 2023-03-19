@@ -30,8 +30,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        //http.csrf().disable();
         // Public pages
         http.authorizeRequests().antMatchers("/").permitAll();
+        http.authorizeRequests().antMatchers("/registrado").permitAll();
+        http.authorizeRequests().antMatchers("/registrarse").permitAll();
         http.authorizeRequests().antMatchers("/login").permitAll();
         http.authorizeRequests().antMatchers("/loginerror").permitAll();
         http.authorizeRequests().antMatchers("/logout").permitAll();
@@ -43,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Private pages
         http.authorizeRequests().antMatchers("/Formulario").hasAnyRole("USER");
+        http.authorizeRequests().antMatchers("/Inicio").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/NuevoProducto").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/conversaciones/*").hasAnyRole("USER");
         http.authorizeRequests().antMatchers("/conversacion/*").hasAnyRole("USER");
@@ -55,10 +59,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Login form
         http.formLogin().loginPage("/login");
-        http.formLogin().usernameParameter("username");
-        http.formLogin().passwordParameter("password");
-        http.formLogin().defaultSuccessUrl("/");
-        http.formLogin().failureUrl("/loginerror");
+        http.formLogin().usernameParameter("nombreUsuario");
+        http.formLogin().passwordParameter("claveUsuario");
+        http.formLogin().defaultSuccessUrl("/Inicio");
+        http.formLogin().failureUrl("/login");
 
         // Logout
         http.logout().logoutUrl("/logout");
