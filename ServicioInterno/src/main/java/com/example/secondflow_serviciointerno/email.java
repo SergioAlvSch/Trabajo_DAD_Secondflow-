@@ -5,12 +5,14 @@ public class email {
     private String destinatario;
     private String texto;
     private String titulo;
+    private String asunto;
 
-    public email(String destinatario, String texto, String titulo) {
+    public email(String destinatario, String texto, String titulo,String asunto) {
+        this.asunto= asunto;
         this.destinatario = destinatario;
         this.texto = texto;
         this.titulo = titulo;
-        this.remitente = "SecondFlowApp@gmail.com";
+        this.remitente = "SecondFlowApp@hotmail.com";
     }
 
     public String getRemitente() {
@@ -43,5 +45,13 @@ public class email {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getAsunto() {
+        return asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
     }
 }
