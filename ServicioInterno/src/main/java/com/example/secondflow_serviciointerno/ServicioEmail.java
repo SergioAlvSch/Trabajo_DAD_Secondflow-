@@ -2,8 +2,8 @@ package com.example.secondflow_serviciointerno;
 
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,7 +19,7 @@ public class ServicioEmail {
         MimeMessage email = sender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(email,true);
-            helper.setFrom("SecondFlowApp@gmail.com");
+            helper.setFrom("SecondFlowApp@hotmail.com");
             helper.setTo(mensaje.getDestinatario());
             helper.setSubject(mensaje.getAsunto());
             helper.setText(mensaje.getTexto(), true);
@@ -28,7 +28,7 @@ public class ServicioEmail {
 
             return true;
 
-        } catch (MessagingException e) {
+        } catch (jakarta.mail.MessagingException e) {
             e.printStackTrace();
             return false;
         }
