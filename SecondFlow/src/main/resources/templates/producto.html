@@ -25,12 +25,15 @@
                 <p><strong>Precio:</strong><br>{{producto.precio}}</p>
             </div>
             <br><br>
+            {{#isVendedor}}
             <button onclick="location.href='/eliminarProducto/{{producto.id}}'">Eliminar</button>
             <button onclick="location.href='/modificando/{{producto.id}}'">Editar</button>
             <br>
+            {{/isVendedor}}
+            {{^isVendedor}}
             <button onclick="location.href='/comprar/producto/{{producto.id}}'">COMPRAR</button>
-
             <br>
+            {{/isVendedor}}
             <button onclick="location.href='/'">Volver al Inicio</button>
             </p>
 
