@@ -1,11 +1,9 @@
 {{>Cabecera}}
 <title>Subir producto</title>
 <div style="background-color: #c9ffff">
-
     <h1>Formulario de nuevo producto</h1>
     <h3>Rellene los siguientes campos:</h3>
-
-
+    
     <form method="post" action="/NuevoProducto" enctype="multipart/form-data">
 
         <label>
@@ -43,6 +41,7 @@
         <br><br><br>
         <input type="reset" value='Eliminar'/>
         <input type="submit" value='Crear Producto'>
+        <input type="hidden" name="_csrf" value="{{token}}"/>
     </form>
     <br>
 
