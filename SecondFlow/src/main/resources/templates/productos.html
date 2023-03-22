@@ -1,19 +1,13 @@
 <h2>Lista de Productos</h2>
 <div style="background-color: #c9ffff">
     <div style="text-align: center">
-
-
-
-
-
-    <form method="post" action="/buscar" enctype="multipart/form-data">
-        <label>
-            <input type='text' name="nombreProductoABuscar" placeholder="Busqueda de producto" autocomplete="on"
-                             required>
-        </label>
-        <input type="submit" value="Buscar">
-
-    </form>
+        <form method="post" action="/buscar" enctype="multipart/form-data">
+            <label>
+                <input type='text' name="nombreProductoABuscar" placeholder="Busqueda de producto" autocomplete="on"
+                       required>
+            </label>
+            <input type="submit" value="Buscar">
+        </form>
         <ul>
             {{#listaProductos}}
             {{^hayComprador}}
@@ -32,8 +26,6 @@
             </li>
             {{/hayComprador}}
             {{/listaProductos}}
-
         </ul>
-
     </div>
 </div>
