@@ -13,6 +13,7 @@
 <body>
 {{^producto.hayComprador}}
 <form method="post" action="/producto/vendido/{{producto.id}}/{{idComprador}}">
+    <input type="hidden" name="_csrf" value="{{token}}" />
     He decidido vender el producto: <input type="submit" value='Vender'>
 </form>
 {{/producto.hayComprador}}
@@ -34,6 +35,7 @@
                   name='mensaje' cols="40" rows="3" required></textarea>
         </label>
         <input type="submit" value='Enviar'>
+        <input type="hidden" name="_csrf" value="{{token}}" />
     </form>
 </ul>
 
