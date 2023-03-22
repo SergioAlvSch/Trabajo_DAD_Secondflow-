@@ -3,6 +3,7 @@ package es.SecondFlow.Controladores;
 import antlr.Token;
 import es.SecondFlow.Entidades.*;
 import es.SecondFlow.Servicios.*;
+import es.SecondFlow.ServicioInterno.*;
 import org.hibernate.Session;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,22 +40,26 @@ public class SecondFlowController {
 
     @Autowired
     private GestionUsuarios gestionUsuarios;
-    private Usuario usuarioLogeado;
 
     @Autowired
     private GestionConversaciones gestionConversaciones;
     @Autowired
     private GestionMensajes gestionMensajes;
 
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/")
-    public String mostrarPaginaPrincipalSinSesion(Model model) {
+    public String mostrarPaginaPrincipalSinSesion(Model model, HttpServletRequest request) {
         mostrarListaProductos(model);
-        if(usuarioLogeado!=null) {
+        Principal usuario = request.getUserPrincipal();
+        if (usuario != null) {
 
             model.addAttribute("logged", true);
             model.addAttribute("admin", model.getAttribute("admin"));
-            model.addAttribute("usuario",usuarioLogeado);
-             return "Inicio";
+            model.addAttribute("usuario", gestionUsuarios.findByNombre(usuario.getName()));
+            return "Inicio";
         }
         model.addAttribute("logged", false);
 
@@ -62,6 +68,7 @@ public class SecondFlowController {
     }
 
     @GetMapping("/Inicio")
+    @ModelAttribute
     public String mostrarPaginaPrincipal(Model model, HttpServletRequest request) {
         Principal usuario = request.getUserPrincipal();
         mostrarListaProductos(model);
@@ -69,9 +76,8 @@ public class SecondFlowController {
             return "InicioSinSesion";
         }
         model.addAttribute("logged", true);
-        model.addAttribute("admin", request.isUserInRole("ADMIN"));
-        usuarioLogeado = gestionUsuarios.findByNombre(usuario.getName());
-        model.addAttribute("usuario", usuarioLogeado);
+        model.addAttribute("admin", request.isUserInRole("USER"));
+        model.addAttribute("usuario", gestionUsuarios.findByNombre(usuario.getName()));
 
 
         return "Inicio";
@@ -79,7 +85,6 @@ public class SecondFlowController {
 
     @GetMapping("/Perfil/{id}")
     public String mostrarPerfil(Model model, @PathVariable long id) {
-
         Optional<Usuario> u = gestionUsuarios.findById(id);//solo hay un usuario, como no se podrá pasar, pues debe de ser el 1
         if (u.isPresent()) {
             model.addAttribute("usuario", u.get());
@@ -90,9 +95,13 @@ public class SecondFlowController {
     }
 
     @RequestMapping("/buscar")
-    public String busqueda(Model model, String nombreProductoABuscar) {
-        model.addAttribute("usuario", usuarioLogeado);
+    public String busqueda(Model model, String nombreProductoABuscar, HttpServletRequest request) {
+        Principal usuario = request.getUserPrincipal();
         model.addAttribute("listaProductos", gestionProductos.findByNombre(nombreProductoABuscar));
+        if (usuario == null) {
+            return "inicioSinSesion";
+        }
+        model.addAttribute("usuario", gestionUsuarios.findByNombre(usuario.getName()));
         return "Inicio";
     }
 
@@ -104,24 +113,36 @@ public class SecondFlowController {
     }
 
     @GetMapping("/productos/Comprados/{id}")
-    public String mostrarHistorialCompras(Model model, @PathVariable long id) {
-        Optional<Usuario> aux = gestionUsuarios.findById(id);
-        if (aux.isPresent()) {
-            model.addAttribute("usuario", aux.get());
-            model.addAttribute("listaProductos", aux.get().getListaProductosComprados());
+    public String mostrarHistorialCompras(Model model, @PathVariable long id, HttpServletRequest request) {
+        Principal usuario = request.getUserPrincipal();
+        Usuario aux = gestionUsuarios.findByNombre(usuario.getName());
+        if (aux.getId()==id) {
+            model.addAttribute("usuario", aux);
+            model.addAttribute("listaProductos", aux.getListaProductosComprados());
             return "MiListaProductosComprados";
         }
-        model.addAttribute("usuario", usuarioLogeado);
+        model.addAttribute("usuario", gestionUsuarios.findByNombre(usuario.getName()));
         return "Inicio";
     }
 
 
     @GetMapping("/productos/{id}")
-    public String getProducto(Model model, @PathVariable long id) {
-
+    public String getProducto(Model model, @PathVariable long id, HttpServletRequest request) {
+        Principal usuario = request.getUserPrincipal();
+        Usuario aux=null;
+        if(usuario!=null)
+             aux = gestionUsuarios.findByNombre(usuario.getName());
         Optional<Producto> p = gestionProductos.findById(id);
 
         if (p.isPresent()) {
+            Boolean isVendedor;
+            if (aux == null) {
+                isVendedor = false;
+            } else {
+                isVendedor = aux.getNombreUsuario().equals(p.get().getVendedor().getNombreUsuario());
+            }
+
+            model.addAttribute("isVendedor", isVendedor);
             model.addAttribute("producto", p.get());
             return "producto";
         } else {
@@ -131,14 +152,23 @@ public class SecondFlowController {
     }
 
     @GetMapping("/comprar/producto/{id}")
-    public String comprarProducto(Model model, @PathVariable long id) {
-
+    public String comprarProducto(Model model, @PathVariable long id, HttpServletRequest request) {
+        Principal usuario = request.getUserPrincipal();
+        Usuario aux = gestionUsuarios.findByNombre(usuario.getName());
         Optional<Producto> p = gestionProductos.findById(id);
 
         if (p.isPresent()) {
             Usuario vendedor = p.get().getVendedor();
-            Usuario comprador = usuarioLogeado;
+            Usuario comprador = aux;
+            Boolean isVendedor = aux.getNombreUsuario().equals(vendedor.getNombreUsuario());
+            if (isVendedor) {
+                model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
+                return "Inicio";
+            }
+            model.addAttribute("isVendedor", isVendedor);
             model.addAttribute("producto", p.get());
+
+            //todo: web
             Conversacion c = gestionConversaciones.findByUsuarios(comprador, vendedor, p.get());
             if (c == null) {
                 c = new Conversacion(comprador, vendedor, p.get());
@@ -157,12 +187,13 @@ public class SecondFlowController {
             return "Chat";
         } else {
             model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
-            return "productos";
+            return "Inicio";
         }
     }
 
     @RequestMapping("/producto/vendido/{id}/{idComprador}")
-    public String productoVendido(Model model, @PathVariable long id, @PathVariable long idComprador) {
+    public String productoVendido(Model model, @PathVariable long id, @PathVariable long idComprador, HttpServletRequest request) {
+        Principal usuario = request.getUserPrincipal();
         Optional<Producto> p = gestionProductos.findById(id);
         if (p.isPresent()) {
             Usuario vendedor = p.get().getVendedor();
@@ -176,19 +207,24 @@ public class SecondFlowController {
                 gestionUsuarios.update();
                 gestionProductos.update();
                 model.addAttribute("producto", p.get());
+                if (ServicioInternoEmail.sendCompraVentaEmail(p.get())) {
+                    return "productoVendido";
+                }
                 return "productoVendido";
             }
         }
-        model.addAttribute("usuario", usuarioLogeado);
+        model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
+        model.addAttribute("usuario", gestionUsuarios.findByNombre(usuario.getName()));
         return "Inicio";
     }
 
     @GetMapping("/eliminarProducto/{id}")
-    public String eliminarProducto(Model model, @PathVariable long id) {
-
+    public String eliminarProducto(Model model, @PathVariable long id,HttpServletRequest request) {
+        Principal usuario=request.getUserPrincipal();
         Optional<Producto> producto = gestionProductos.findById(id);
         if (producto.isPresent()) {
             model.addAttribute("producto", producto.get());
+            //todo: modificar cuando web
             List<Conversacion> conversacionesAsociadas = gestionConversaciones.findByProducto(producto.get());
             for (Conversacion aux : conversacionesAsociadas) {
                 gestionConversaciones.delete(aux.getId());
@@ -196,29 +232,31 @@ public class SecondFlowController {
             gestionProductos.delete(id);
             return "productoeliminado";
         } else {
+            model.addAttribute("usuario",gestionUsuarios.findByNombre(usuario.getName()));
             model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
-            return "productos";
+            return "Inicio";
         }
     }
 
 
     @GetMapping("/modificando/{id}")
-    public String modificarProducto(Model model, @PathVariable long id) {
-
+    public String modificarProducto(Model model, @PathVariable long id,HttpServletRequest request) {
+        Principal usuario=request.getUserPrincipal();
         Optional<Producto> producto = gestionProductos.findById(id);
         if (producto.isPresent()) {
             model.addAttribute("producto", producto.get());
             return "modificarProducto";
         } else {
+            model.addAttribute("usuario",gestionUsuarios.findByNombre(usuario.getName()));
             model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
-            return "productos";
+            return "Inicio";
         }
     }
 
     @RequestMapping("/modificado/{id}")
-    public String productoModificado(Model model, @PathVariable long id, String nombreProducto, String categoriaProducto, double precioProducto, String descripcionProducto, MultipartFile imageField, boolean removeImage) throws IOException {
+    public String productoModificado(Model model, @PathVariable long id, String nombreProducto, String categoriaProducto, double precioProducto, String descripcionProducto, MultipartFile imageField, boolean removeImage,HttpServletRequest request) throws IOException {
 
-
+        Principal usuario=request.getUserPrincipal();
         Optional<Producto> producto = gestionProductos.findById(id);
         if (producto.isPresent()) {
             producto.get().setNombre(nombreProducto);
@@ -234,22 +272,24 @@ public class SecondFlowController {
             model.addAttribute("producto", producto.get());
             return "producto";
         } else {
+            model.addAttribute("usuario",gestionUsuarios.findByNombre(usuario.getName()));
             model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
-            return "productos";
+            return "Inicio";
         }
     }
 
-    @RequestMapping("/NuevoProducto")
-    public String crearProducto(Model model, String nombreProducto, String categoriaProducto, String descripcionProducto, double precioProducto, MultipartFile imageField) throws IOException {
-
-
-        Producto p = new Producto(nombreProducto, categoriaProducto, descripcionProducto, precioProducto, usuarioLogeado);
+    @PostMapping("/NuevoProducto")
+    public String crearProducto(Model model, HttpServletRequest request, String nombreProducto, String categoriaProducto, String descripcionProducto, double precioProducto, MultipartFile imageField) throws IOException {
+        Principal usuario = request.getUserPrincipal();
+        Usuario aux = gestionUsuarios.findByNombre(usuario.getName());
+        Producto p = new Producto(nombreProducto, categoriaProducto, descripcionProducto, precioProducto, aux);
 
         if (!imageField.isEmpty()) {
             p.setImagenProducto(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
             p.setHayImagen(true);
         }
-        usuarioLogeado.getListaProductos().add(p);
+        aux.getListaProductos().add(p);
+        model.addAttribute("isVendedor",true);
         model.addAttribute("producto", p);
         gestionProductos.save(p);
         return "producto";
@@ -300,26 +340,28 @@ public class SecondFlowController {
     }
 
     @GetMapping("/conversaciones/{id}")
-    public String mostrarListaConversaciones(Model model, @PathVariable long id) {
-        Optional<Usuario> aux = gestionUsuarios.findById(id);
-        if (aux.isPresent()) {
+    public String mostrarListaConversaciones(Model model, @PathVariable long id, HttpServletRequest request) {
+        Principal usuario = request.getUserPrincipal();
+        Usuario aux = gestionUsuarios.findByNombre(usuario.getName());
+        if (aux.getId()==id) {
             List<Conversacion> auxConversaciones = new ArrayList<>();
-            auxConversaciones.addAll(aux.get().getListaMisConversacionesE());
-            auxConversaciones.addAll(aux.get().getListaMisConversacionesR());
+            auxConversaciones.addAll(aux.getListaMisConversacionesE());
+            auxConversaciones.addAll(aux.getListaMisConversacionesR());
             model.addAttribute("listaConversaciones", auxConversaciones);
             return "ListaConversaciones";
         }
-        model.addAttribute("usuario", usuarioLogeado);
+        model.addAttribute("usuario", aux);
+        model.addAttribute("listaProductos", gestionProductos.findAllDisponibles());
         return "Inicio";
     }
 
 
     @RequestMapping("/conversacion/{id}/Enviado/{idEmisor}")
-    public String getConversación(Model model, @PathVariable long id, String mensaje, @PathVariable long idEmisor) {
+    public String getConversación(Model model, @PathVariable long id, String mensaje, @PathVariable long idEmisor, HttpServletRequest request) {
 
-
+        Principal usuario = request.getUserPrincipal();
         Optional<Conversacion> conversacion = gestionConversaciones.findById(id);
-
+        //todo: web
         if (conversacion.isPresent()) {
             Mensaje nuevoMensaje = new Mensaje(mensaje, LocalDateTime.now(), idEmisor, conversacion.get());
             gestionMensajes.save(nuevoMensaje);
@@ -342,18 +384,21 @@ public class SecondFlowController {
                 return "Chat";
             }
 
-            model.addAttribute("usuario", usuarioLogeado);
+            model.addAttribute("usuario", gestionUsuarios.findByNombre(usuario.getName()));
             return "Inicio";
 
 
         } else {
-            model.addAttribute("usuario", usuarioLogeado);
+            model.addAttribute("usuario", gestionUsuarios.findByNombre(usuario.getName()));
             return "Inicio";
         }
     }
 
     @RequestMapping("/login")
-    public String login() {
+    public String login(Model model, HttpServletRequest request) {
+
+        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+        model.addAttribute("token", token.getToken());
         return "IniciarSesion";
     }
 
@@ -368,13 +413,15 @@ public class SecondFlowController {
         return "Registrarse";
     }
 
-    @RequestMapping("/registrado")
+    @PostMapping("/")
     public String registrado(Model model, String nombreUsuario, String passwordUsuario, String password2Usuario, String correoUsuario) {
-        if (password2Usuario == passwordUsuario && gestionUsuarios.findByNombre(nombreUsuario) == null) {
-            Usuario registrado = new Usuario(nombreUsuario, password2Usuario, correoUsuario, "USER");
+        if (password2Usuario.equals(passwordUsuario) && gestionUsuarios.findByNombre(nombreUsuario) == null) {
+            Usuario registrado = new Usuario(nombreUsuario, passwordEncoder.encode(password2Usuario), correoUsuario, "USER");
             gestionUsuarios.save(registrado);
             //Todo:enviarCorreo
-
+            if (ServicioInternoEmail.sendRegisterEmail(registrado)) {
+                return "InicioSinSesion";
+            }
             return "InicioSinSesion";
         }
         if (password2Usuario != passwordUsuario) {
@@ -390,6 +437,7 @@ public class SecondFlowController {
         model.addAttribute("nombreTemp", nombreUsuario);
         return "Registrarse";
     }
+
 
     @RequestMapping("/loginError")
     public String loginError() {
