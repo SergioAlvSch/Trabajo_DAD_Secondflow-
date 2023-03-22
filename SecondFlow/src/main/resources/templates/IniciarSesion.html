@@ -10,7 +10,6 @@
     <h1>Iniciar Sesión</h1>
 
     <form role='form' method="post" action="/login">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <label>
             Nombre: <input type='text' name='nombreUsuario' placeholder="Introduzca nombre de usuario" autocomplete="on"
                            required>
@@ -20,10 +19,12 @@
             Clave: <input type='password' name='claveUsuario' placeholder="Introduzca su contraseña" required>
         </label><br><br>
 
-        <input type="reset" value='Borrar'style="color: red"/>
-        <input type="submit" value='Iniciar Sesión' ><br><br>
+        <input type="reset" value='Borrar' style="color: red"/>
+        <input type="submit" value='Iniciar Sesión'><br><br>
+        <input type="hidden" name="_csrf" value="{{token}}"/>
 
         <a href='/registrarse'>No tengo cuenta, Registrarse </a>
+
     </form>
 </div>
 </body>
