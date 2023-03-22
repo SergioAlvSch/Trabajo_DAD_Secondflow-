@@ -3,55 +3,64 @@
 {{>Cabecera}}
 
 <div style="background-color: #c9ffff">
-<head>
-    <div style="text-align: center">
-  <h1>Bandeja de conversaciones</h1>
-        <h2>Producto: {{producto.nombre}} - Vendedor: {{producto.vendedor.nombreUsuario}}</h2>
-    </div>
-</head>
-
-<body>
-{{^producto.hayComprador}}
-<form method="post" action="/producto/vendido/{{producto.id}}/{{idComprador}}">
-    <input type="hidden" name="_csrf" value="{{token}}" />
-    He decidido vender el producto: <input type="submit" value='Vender'>
-</form>
-{{/producto.hayComprador}}
-
-<ul>
-    {{#listaMensajes}}
-    <li>
-        <div style="text-align: end">
-        <p>{{fecha}}</p>
-            <p><strong>{{texto}}</strong></p>
-        <br>
+    <head>
+        <div style="text-align: center">
+            <h1>Bandeja de conversaciones</h1>
+            <h2>Producto: {{producto.nombre}} - Vendedor: {{producto.vendedor.nombreUsuario}}</h2>
         </div>
-    </li>
-    {{/listaMensajes}}
+    </head>
 
-    <form method="post" action="/conversacion/{{conversacionAbierta.id}}/Enviado/1">
-        <label>
+    <body>
+    {{^producto.hayComprador}}
+    {{#isVendedor}}
+    <form method="post" action="/producto/vendido/{{producto.id}}/{{idComprador}}">
+        <input type="hidden" name="_csrf" value="{{token}}"/>
+        He decidido vender el producto: <input type="submit" value='Vender'>
+    </form>
+    {{/isVendedor}}
+    {{/producto.hayComprador}}
+
+    <ul>
+        {{#listaMensajes}}
+        <li>
+            <div style="text-align: end">
+                <p>{{fecha}}</p>
+                <p><strong>{{texto}}</strong></p>
+                <br>
+            </div>
+        </li>
+        {{/listaMensajes}}
+        <div style="text-align: center">
+            <form method="post" action="/conversacion/{{conversacionAbierta.id}}/Enviado/{{id}}">
+                <label>
         <textarea placeholder="Escriba su mensaje"
                   name='mensaje' cols="40" rows="3" required></textarea>
-        </label>
-        <input type="submit" value='Enviar'>
-        <input type="hidden" name="_csrf" value="{{token}}" />
-    </form>
-</ul>
+                </label>
+                <input type="submit" value='Enviar'>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
+        </div>
+    </ul>
 
 
-
-<br>
-<div style="text-align: center">
-<h2>Mis conversaciones</h2>
-</div>
-<ul>
-    {{#listaConversaciones}}
-    <li>
-        <p><strong></strong><br><a href="/comprar/producto/{{producto.id}}">Chat con: {{producto.vendedor.nombreUsuario}} para: {{producto.nombre}}</a>
-    </li>
-    {{/listaConversaciones}}
-</ul>
-</body>
+    <br>
+    <div style="text-align: center">
+        <h2>Mis conversaciones</h2>
+    </div>
+    <ul>
+        {{#listaConversaciones}}
+        <li>
+            {{#isVendedor}}
+            <p><strong></strong><br><a href="/conversacion/{{id}}">Chat con: {{emisor.nombreUsuario}} para:
+                {{producto.nombre}}</a>
+                {{/isVendedor}}
+                {{^isVendedor}}
+            <p><strong></strong><br><a href="/conversacion/{{id}}">Chat con: {{producto.vendedor.nombreUsuario}} para:
+                {{producto.nombre}}</a>
+                {{/isVendedor}}
+        </li>
+        {{/listaConversaciones}}
+    </ul>
+    </body>
     <div>
-{{>PieDePagina}}
+        {{>PieDePagina}}
