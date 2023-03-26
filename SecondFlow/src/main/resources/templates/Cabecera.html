@@ -24,26 +24,46 @@
             }
         </style>
         <div style="background: black">
-            <font COLOR="#add8e6">
+            <font COLOR="#c9ffff">
                 <h1>SECOND FLOW</h1>
                 <h4>Página de compra - venta de productos</h4>
             </font>
             <a type="image" href="/"><img src="/logo.png" width="400" height="200"></a>
+
             {{^logged}}
-            <form action='/login'>- Iniciar Sesion
-                <input type='submit' value='Iniciar Sesion'>
-                <input type="hidden" name="_csrf" value="{{token}}" />
-
+        <br>
+            <form action='/login' style="display: inline-block">- Iniciar Sesion
+                <input type='submit' value='Iniciar Sesion' style="background-color: #c9ffff">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
-            {{/logged}} {{#logged}}
 
+            <form action='/registrarse' style="display: inline-block">- Registrarse
+                <input type='submit' value='Registrarse' style="background-color: #c9ffff">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+            </form>
+            {{/logged}}
+
+            {{#logged}}
             <form action="/logout" method="post">
-                <button type="submit">Log Out</button>
-                <input type="hidden" name="_csrf" value="{{token}}" />
+                <button type="submit" style="color: red">Cerrar Sesión</button>
+                <input type="hidden" name="_csrf" value="{{token}}"/>
             </form>
             {{/logged}}
         </div>
+        <style>
+            body{
+                background-color: #c9ffff;
+                font-family: "Bahnschrift";
+            }
+            h1{
+                font-family: "Bahnschrift";
+                text-shadow: 2px 2px 2px darkgrey;
+            }
+            button{
+                font-family: "Bahnschrift";
+               box-shadow:  1px 1px 1px black;
 
-
+            }
+        </style>
     </header>
 </div>
