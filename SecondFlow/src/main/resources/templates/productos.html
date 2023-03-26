@@ -1,31 +1,29 @@
 <h2>Lista de Productos</h2>
-<div style="background-color: #c9ffff">
-    <div style="text-align: center">
-        <form method="post" action="/buscar" enctype="multipart/form-data">
-            <label>
-                <input type='text' name="nombreProductoABuscar" placeholder="Busqueda de producto" autocomplete="on"
-                       required>
-            </label>
-            <input type="submit" value="Buscar">
-        </form>
-        <ul>
-            {{#listaProductos}}
-            {{^hayComprador}}
+<div style="text-align: center">
+    <form method="post" action="/buscar" enctype="multipart/form-data">
+        <label>
+            <input type='text' name="nombreProductoABuscar" placeholder="Busqueda de producto" autocomplete="on"
+                   required>
+        </label>
+        <input type="submit" value="Buscar">
+    </form>
+    <ul>
+        {{#listaProductos}}
+        {{^hayComprador}}
 
-            <li>
-                <a href="./productos/{{id}}">
-                    {{#isHayImagen}}
-                    <img src="/producto/{{producto.id}}/image" height="200" width="300">
-                    {{/isHayImagen}}
+        <li>
+            <a href="./productos/{{id}}">
+                {{#isHayImagen}}
+                <img src="/producto/{{producto.id}}/image" height="200" width="300">
+                {{/isHayImagen}}
 
-                    {{^isHayImagen}}
-                    <img src="/productoGenerico.png" height="400" width="400">
-                    {{/isHayImagen}}
-                    <br>{{nombre}}
-                </a>
-            </li>
-            {{/hayComprador}}
-            {{/listaProductos}}
-        </ul>
-    </div>
+                {{^isHayImagen}}
+                <img src="/productoGenerico.png" height="400" width="400">
+                {{/isHayImagen}}
+                <br>{{nombre}}
+            </a>
+        </li>
+        {{/hayComprador}}
+        {{/listaProductos}}
+    </ul>
 </div>
