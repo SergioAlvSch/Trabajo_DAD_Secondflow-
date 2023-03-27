@@ -115,3 +115,39 @@ Pantalla donde se podrá acceder a las distintas conversaciones que tenga uno ab
   
   <div align="center">
 <img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/relacionesEntidades.png" alt="android" width="550" height="300"/> </div>
+
+<h1 align="center"> Fase 3 </h1>
+
+<h2> Instrucciones de despliegue de la aplicación </h2>
+<h3> Compilación </h3>
+1.- Se añade plugin especifico de jar al pom.xml en el cual se indica cual es la clase principal del proyecto entre otras cosas<br>
+2.- Desde Eclipse seleccionando el nombre del proyecto -> Run as -> 4 Maven Build y en Goals poner package spring-boot:repackage, de forma que creamos el jar<br>
+3.- Repetir proceso para el Servicio Interno<br>
+4.- Subir los archivos .jar generados a myR<br>
+<h3> Creacion de Instancia OpenStack </h3>
+1.- Acceder a la pagina de OpenStack e introducir las credenciales proporcionadas<br>
+2.- Crear una nueva instancia: autogenerar Ip flotante asociada<br>
+3.- Crear una nueva llave y asociarla a la instancia creada, asegurase de que tiene el menor numero de permisos(chmod 400) <br>
+4.- Crear security group para el puerto de tu aplicación y asociarlo a la instancia<br>
+<h3> Subida de jar </h3>
+1.-Teniendo los jar en el myR los copiamos a la maquina virtual con este comando: scp -i "RUTA DE LA LLAVE" "RUTA DEL .JAR" ubuntu@"IP FLOTANTE AUTOGENERADA":/home/ubuntu<br>
+2.-Entramos en la maquina virtual ssh con el siguiente comando: ssh -i  "RUTA DE LA LLAVE" ubuntu@"IP FLOTANTE AUTOGENERADA"<br>
+<h3> Instalaciones en maquina </h3>
+Una vez entramos en la maquina virtual ssh instalamos algunas cosas que nos haran falta para ejecutar los .jar:<br>
+1.-Se actualizan los paquetes con el comando: sudo apt update<br>
+2.-Instalamos java mediante el comando: sudo apt install openjdk-17-jdk openjdk-17-jre<br>
+3.-Comprobamos si se ha instalado java y verificamos su version con: java --version<br>
+4.-Instalamos BD mysql mediante el comando: sudo apt install mysql-server<br> 
+5.-Comprobamos si se ha instalado mysql y verificamos su version con: mysql --version<br>
+6.-Entramos en el inicio de sesion de mysql con: mysql -u root -p<br>
+&nbsp-&nbsp6.1.- En caso de no poder entrar hacemos este comando: sudo mysql -u root<br>
+7.- Una vez dentro, si fuese necesario cambiamos la contraseña del root con lo siguiente: ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'TU CONTRASEÑA DEL PROPIERTIES';<br>
+8.- Nos creamos el esquema que vamos a usar en la BD con lo siguiente: CREATE SCHEMA 'NOMBRE DE TU SCHEMA DEL PROPIERTIES';<br>
+9.- Salimos del mysql con exit<br>
+<h3> Ejecutar la aplicación </h3>
+Estando dentro de la maquina virtual ssh:<br>
+1.-Ejecutamos los .jar con el siguiente comando: java -jar "NOMBRE DEL .JAR"<br>
+2.-Abrimos una nueva terminal<br>
+3.-Repetir paso 1 con el .jar del servicio interno<br>
+4.-Acceder a la pagina con : https://"Ip Flotante":"PUERTO ASOCIADO"<br>
+
