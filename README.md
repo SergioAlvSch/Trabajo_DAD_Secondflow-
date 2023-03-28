@@ -48,11 +48,11 @@ Mensajería entre usuarios y envió de correo de confirmación de creación de c
 <h2> Pantallas principales </h2>
 <div align="center">
 <h3> Pantalla de inicio </h3>
-<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/inicioPostCreacionProducto.jpg" alt="android" width="550" height="300"/> </div>
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/principalSinSesion.jpg" alt="android" width="550" height="300"/> </div>
 <div align="justify">
+
 Pantalla principal donde se visualizan todos los artículos en venta así como enlaces a: formulario para subir un nuevo producto, acceder al perfil del usuario y poder acceder a sus conversaciones. En todas las páginas habrá una cabecera un un pie de pagina donde, pulsando al logo desde cualquier lugar, volverá a esta pagina principal. Se podrá realizar una búsqueda de productos por nombre.
 </div>
-
 
 <div align="center">
 <h3> Nuevo producto </h3>
