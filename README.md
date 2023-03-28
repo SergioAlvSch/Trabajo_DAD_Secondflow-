@@ -56,14 +56,14 @@ Pantalla principal donde se visualizan todos los artículos en venta así como e
 
 <div align="center">
 <h3> Nuevo producto </h3>
-<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/formularioCreacion.jpg" alt="android" width="550" height="300"/> </div>
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/formularioProducto.jpg" alt="android" width="550" height="300"/> </div>
 <div align="justify">
 Ventana donde se podrá poner en venta un nuevo artículo, unicamente rellenando los campos requeridos, todos los campos son de obligatorio relleno salvo la imagen, que en caso de no ponerla, se mostrará una genérica.
 </div>
 
 <div align="center">
 <h3> Visualización de un producto </h3>
-<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/productoCreado.jpg" alt="android" width="550" height="300"/> </div>
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/creacionProducto.jpg" alt="android" width="550" height="300"/> </div>
 <div align="justify">
 En esta página se visualiza un articulo subido previamente con todos los campos, dando la posibilidad a su creador de editarlo o eliminarlo y a su cliente potencial de comprarlo.
 </div>
@@ -83,7 +83,7 @@ Formulario para editar un articulo previamente puesto en venta para su modificac
 
 <div align="center">
 <h3> Compra de un artículo </h3>
-<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/conversacionPreCompra.jpg" alt="android" width="550" height="300"/> </div>
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/chatProducto.jpg" alt="android" width="550" height="300"/> </div>
 Al seleccionar comprar un articulo desde la vista de su visualización se accede al chat donde se establece el dialogo comprador-vendedor, donde este último puede acceder a vender el articulo.
 
 
