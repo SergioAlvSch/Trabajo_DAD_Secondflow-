@@ -17,6 +17,12 @@ Eduard Vasile Stancu
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/tree/main#-diagrama-de-clases-uml-">-&nbsp &nbsp Diagrama de clases uml </a>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/tree/main#-diagrama-entidadrelaci%C3%B3n-">-&nbsp &nbsp Diagrama Entidad/Relacion </a>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-fase-3-"> Fase 3  </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-instrucciones-de-despliegue-de-la-aplicaci%C3%B3n-">-&nbsp &nbspInstrucciones de despliegue de aplicacion </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-compilaci%C3%B3n-">-&nbsp &nbspCompilacion  </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-creacion-de-instancia-openstack-">-&nbsp &nbspCreacion instacia OpenStack  </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-subida-de-jar-">-&nbsp &nbspSubida del .jar </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-instalaciones-en-maquina-">-&nbsp &nbspInstalaciones en maquina  </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-ejecutar-la-aplicaci%C3%B3n-">-&nbsp &nbspEjecucion de la aplicación  </a>
 
 
 <h1 align="center"> Fase 1 </h1>
@@ -118,7 +124,7 @@ Pantalla donde se podrá acceder a las distintas conversaciones que tenga uno ab
 <img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/relacionesEntidades.png" alt="android" width="550" height="300"/> </div>
 
 <h1 align="center"> Fase 3 </h1>
-
+  
 <h2> Instrucciones de despliegue de la aplicación </h2>
 <h3> Compilación </h3>
 1.- Se añade plugin especifico de jar al pom.xml en el cual se indica cual es la clase principal del proyecto entre otras cosas<br>
@@ -151,4 +157,3 @@ Estando dentro de la maquina virtual ssh:<br>
 2.-Abrimos una nueva terminal<br>
 3.-Repetir paso 1 con el .jar del servicio interno<br>
 4.-Acceder a la pagina con : https://"Ip Flotante":"PUERTO ASOCIADO"<br>
-
