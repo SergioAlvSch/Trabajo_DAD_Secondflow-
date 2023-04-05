@@ -1,62 +1,65 @@
-<title>Chat</title>
-<meta charset="UTF-8">
 {{>Cabecera}}
 
-<head>
-    <div style="text-align: center">
-        <h1>Bandeja de conversaciones</h1>
-        <h2>Producto: {{producto.nombre}} - Vendedor: {{producto.vendedor.nombreUsuario}}</h2>
-    </div>
-</head>
+<title>Chat</title>
 
 <body>
+<meta charset="UTF-8">
+<div style="text-align: center">
+    <h1>Bandeja de conversaciones</h1>
+    <h2>Producto: {{producto.nombre}} - Vendedor: {{producto.vendedor.nombreUsuario}}</h2>
+</div>
 {{^producto.hayComprador}}
 {{#isVendedor}}
 <form method="post" action="/producto/vendido/{{producto.id}}/{{idComprador}}">
     <input type="hidden" name="_csrf" value="{{token}}"/>
-    He decidido vender el producto: <input type="submit" value='Vender' style="font-size: large">
+    He decidido vender el producto: <input type="submit" value='Vender'
+                                           style="color: lightgrey;background-color: forestgreen; font-size: large;box-shadow: 1px 1px 1px 1px black;">
 </form>
 {{/isVendedor}}
 {{/producto.hayComprador}}
 
-<ul>
+
+<fieldset
+        style="margin-right: 10px; margin-left: 10px; background: linear-gradient(135deg, grey, #c9ffff); border-radius: 20px;">
+
+    {{^listaMensajes}}Chat Vacío{{/listaMensajes}}
     {{#listaMensajes}}
     <li>
         {{#usuarioLog}}
-        <div style="text-align: end">
-
+        <div style="text-align: end; margin-left: 10px">
             <p>{{nombreEmisor}}-{{fecha}}</p>
-            <p><strong>{{texto}}</strong></p>
-            <br>
+            <fieldset
+                    style="margin-right: 5px; margin-left: 600px; background: linear-gradient(135deg, transparent, #c9ffff); border-radius: 20px">
+                <p><strong>{{texto}}</strong></p>
+            </fieldset>
         </div>
         {{/usuarioLog}}
         {{^usuarioLog}}
-        <div style="text-align:start">
+        <div style="text-align:start; margin-right: 10px">
             <p>{{nombreEmisor}}-{{fecha}}</p>
-            <p><strong>{{texto}}</strong></p>
-            <br>
+            <fieldset
+                    style="margin-right: 600px; margin-left: 5px; background: linear-gradient(135deg, transparent, #c9ffff); border-radius: 20px">
+                <p><strong>{{texto}}</strong></p>
+            </fieldset>
         </div>
         {{/usuarioLog}}
     </li>
     {{/listaMensajes}}
-    <br>
-    <div style="text-align: center">
-        <form method="post" action="/conversacion/{{conversacionAbierta.id}}/Enviado/{{id}}">
-            <label>
+</fieldset>
+
+<form method="post" action="/conversacion/{{conversacionAbierta.id}}/Enviado/{{id}}" style="text-align: center">
+    <label>
         <textarea placeholder="Escriba su mensaje"
-                  name='mensaje' cols="40" rows="3" required></textarea>
-            </label>
-            <input type="submit" value='Enviar' style="font-size: x-large">
-            <input type="hidden" name="_csrf" value="{{token}}"/>
-        </form>
-    </div>
-</ul>
-
-
+                  name='mensaje' cols="60" rows="3" required></textarea>
+    </label><br><br>
+    <input type="submit" value='Enviar'
+           style=" color: lightgrey;background-color: forestgreen; font-size: large;box-shadow: 1px 1px 1px 1px black;">
+    <input type="hidden" name="_csrf" value="{{token}}"/>
+</form>
 <br>
-<div style="text-align: center">
-    <h2>Mis conversaciones</h2>
-</div>
+
+<h2 style="text-align: center">Mis conversaciones</h2>
+
 <ul>
     {{#listaConversaciones}}
     <li>
