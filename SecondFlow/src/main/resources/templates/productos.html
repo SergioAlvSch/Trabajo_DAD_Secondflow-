@@ -2,28 +2,29 @@
 <div style="text-align: center">
     <form method="post" action="/buscar" enctype="multipart/form-data">
         <label>
-            <input type='text' name="nombreProductoABuscar" placeholder="Busqueda de producto" autocomplete="on"
+            <input type='text' name="nombreProductoABuscar" placeholder="Búsqueda de producto" autocomplete="on"
                    required>
         </label>
         <input type="submit" value="Buscar">
+        <input type="hidden" name="_csrf" value="{{token}}"/>
     </form>
     <ul>
         {{#listaProductos}}
         {{^hayComprador}}
-
         <li>
             <a href="./productos/{{id}}">
                 {{#isHayImagen}}
-                <img src="/producto/{{producto.id}}/image" height="200" width="300">
+                <img src="/producto/{{producto.id}}/image" height="200" width="200" alt="200">
                 {{/isHayImagen}}
 
                 {{^isHayImagen}}
-                <img src="/productoGenerico.png" height="400" width="400">
+                <img src="/productoGenerico.png" height="200" width="200" alt="200">
                 {{/isHayImagen}}
                 <br>{{nombre}}
-            </a>
+            </a> -  {{producto.precio}} Euros
         </li>
         {{/hayComprador}}
         {{/listaProductos}}
     </ul>
+    {{^listaProductos}}Sin Productos subidos{{/listaProductos}}
 </div>
