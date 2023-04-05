@@ -1,19 +1,25 @@
 <title>Pagina Principal</title>
 {{>Cabecera}}
 <body>
-    <div style="text-align: center">
-        <h1>Bienvenido al espacio de compra - venta mas grande en el mundo universitario </h1>
-    </div>
-    <form action='Formulario'>- Subir un nuevo Producto
+<h1>Página principal</h1>
+<h2 style="text-align: center">Bienvenido al espacio de compra - venta más grande del mundo universitario </h2>
+<div style="margin-left: 10px">
+    <form action='Formulario'>
+        <label style="width: 250px">- Subir un nuevo Producto </label>
         <input type='submit' value='Formulario Nuevo Producto'>
     </form>
-    <form action='/Perfil/{{usuario.id}}'>- Accede a tu perfil
+
+    <form action='/Perfil/{{usuario.id}}'>
+        <label style="width: 250px">- Acceder a tu perfil</label>
         <input type='submit' value='Mi Perfil'>
     </form>
-    <form action='/conversaciones/{{usuario.id}}'>- Accede a tus conversaciones
+
+    <form action='/conversaciones/{{usuario.id}}'>
+        <label style="width: 250px">- Conversaciones</label>
         <input type='submit' value='Chats'>
     </form>
-    {{>productos}}
     <br>
+</div>
+{{>productos}}
 </body>
 {{>PieDePagina}}
