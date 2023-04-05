@@ -1,42 +1,42 @@
 {{>Cabecera}}
-<head>
-    <meta charset="UTF-8">
-    <title>Producto</title>
-</head>
+<title>Producto</title>
+<body>
+<meta charset="UTF-8">
 
 <div style="text-align: center">
     <div>
         <h2>{{producto.nombre}}</h2>
         {{#producto.hayImagen}}
-        <img src="/producto/{{producto.id}}/image" height="400" width="500">
+        <img src="/producto/{{producto.id}}/image" height="300" width="400" alt="200">
         {{/producto.hayImagen}}
 
         {{^producto.hayImagen}}
-        <img src=/productoGenerico.png>
+        <img src=/productoGenerico.png alt="200" style="border-radius: 5px">
         {{/producto.hayImagen}}
-        <div>
-            <br>
-            <p><strong>Vendedor: </strong><br><a href="/Perfil/{{producto.vendedor.id}}">{{producto.vendedor.nombreUsuario}}</a>
-            </p>
-            <p><strong>Nombre: </strong><br>{{producto.nombre}}</p>
-            <p><strong>Categoria:</strong><br> {{producto.categoria}}</p>
-            <p><strong>Descripción:</strong><br>{{producto.descripcion}}</p>
-            <p><strong>Precio:</strong><br>{{producto.precio}}</p>
-        </div>
-        <br><br>
-        {{#isVendedor}}
-        <button onclick="location.href='/eliminarProducto/{{producto.id}}'">Eliminar</button>
-        <button onclick="location.href='/modificando/{{producto.id}}'">Editar</button>
+
+        <p><strong>Vendedor: </strong><br>
+            <a href="/Perfil/{{producto.vendedor.id}}">{{producto.vendedor.nombreUsuario}}</a>
+        </p>
+        <p><strong>Nombre: </strong><br>{{producto.nombre}}</p>
+        <p><strong>Categoría:</strong><br> {{producto.categoria}}</p>
+        <p><strong>Descripción:</strong><br>{{producto.descripcion}}</p>
+        <p><strong>Precio:</strong><br>{{producto.precio}}</p>
         <br>
+        {{#isVendedor}}
+        <button style="color: red" onclick="location.href='/eliminarProducto/{{producto.id}}'">Eliminar</button>
+        <button onclick="location.href='/modificando/{{producto.id}}'">Editar</button>
+        <br><br>
         {{/isVendedor}}
         {{^isVendedor}}
-        <button onclick="location.href='/comprar/producto/{{producto.id}}'">COMPRAR</button>
+        <button onclick="location.href='/comprar/producto/{{producto.id}}' "
+                style=" color: lightgrey;background: linear-gradient(135deg,green, darkolivegreen); font-size: x-large;box-shadow: 1px 1px 1px 1px black;">
+            COMPRAR
+        </button>
         <br><br>
         {{/isVendedor}}
         <button onclick="location.href='/'">Volver al Inicio</button>
-        </p>
-
+        <br><br>
     </div>
 </div>
-
+</body>
 {{>PieDePagina}}
