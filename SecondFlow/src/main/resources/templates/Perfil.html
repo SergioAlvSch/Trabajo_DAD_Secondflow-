@@ -1,38 +1,36 @@
 {{>Cabecera}}
-<head>
-    <meta charset="UTF-8">
-    <title>Perfil</title>
-</head>
+
+<meta charset="UTF-8">
+<title>Perfil</title>
+
 <body>
-<div style="background-color: #c9ffff">
-    <h1>Mi Perfil</h1>
-    <h2>Nombre: {{usuario.nombreUsuario}}</h2>
+<h1>Mi Perfil</h1>
+<h2>Nombre: {{usuario.nombreUsuario}}</h2>
 
-    <form action='/productos/Comprados/{{usuario.id}}'> Ver historial de compras
-        <input type='submit' value='Mi Historial de compras'>
-    </form>
+<form action='/productos/Comprados/{{usuario.id}}'> Ver historial de compras
+    <input type='submit' value='Mi Historial de compras'>
+</form>
 
-    <h2>Lista de producto: </h2>
+<h2>Lista de producto: </h2>
+{{^usuario.listaProductos}}Sin productos {{/usuario.listaProductos}}
+<ul>
+    {{#usuario.listaProductos}}
+    <li>
+        {{^hayComprador}}
+        <a href="/productos/{{id}}">
+            {{#producto.hayImagen}}
+            <img src="/producto/{{producto.id}}/image" height="300" width="400" alt="200">
+            {{/producto.hayImagen}}
 
-    <ul>
-        {{#usuario.listaProductos}}
-        <li>
-            {{^hayComprador}}
-            <a href="/productos/{{id}}">
-                {{#producto.hayImagen}}
-                <img src="/producto/{{producto.id}}/image" height="400" width="500">
-                {{/producto.hayImagen}}
+            {{^producto.hayImagen}}
+            <img src=/productoGenerico.png height="300" width="400" alt="100">
+            {{/producto.hayImagen}}
+            <h3>{{nombre}} </h3>
+        </a>
+        {{/hayComprador}}
+    </li>
+    {{/usuario.listaProductos}}
+</ul>
 
-                {{^producto.hayImagen}}
-                <img src=/productoGenerico.png>
-                {{/producto.hayImagen}}
-                <h3>{{nombre}} </h3>
-            </a>
-            {{/hayComprador}}
-        </li>
-        {{/usuario.listaProductos}}
-    </ul>
-
-</div>
 </body>
 {{>PieDePagina}}
