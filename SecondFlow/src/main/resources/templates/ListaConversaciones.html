@@ -1,25 +1,31 @@
 {{>Cabecera}}
-<head>
-    <meta charset="UTF-8">
-    <title>Mis Conversaciones</title>
-</head>
 
-<div style="text-align: center">
-    <h1>Mis conversaciones: </h1>
-    <ul>
-        {{#listaConversacionesE}}
-        <li>
-            <strong><a href="/conversacion/{{id}}">Chat con: {{producto.vendedor.nombreUsuario}} para:
-                {{producto.nombre}}</a></strong><br>
-        </li>
-        {{/listaConversacionesE}}
+<meta charset="UTF-8">
+<title>Lista Conversaciones</title>
 
-        {{#listaConversacionesR}}
-        <li>
-            <strong><a href="/conversacion/{{id}}">Chat con: {{emisor.nombreUsuario}} para:
-                {{producto.nombre}}</a></strong><br>
-        </li>
-        {{/listaConversacionesR}}
-    </ul>
-</div>
+<h1>Mis conversaciones</h1>
+
+{{^listaConversacionesE}}
+{{^listaConversacionesR}}
+Esto está muy vacío, establece alguna conversación
+{{/listaConversacionesR}}
+{{/listaConversacionesE}}
+
+<ul style="margin-left: 20px; padding: 10px">
+
+    {{#listaConversacionesE}}
+    <li>
+        <strong><a href="/conversacion/{{id}}">Chat con: {{producto.vendedor.nombreUsuario}} para:
+            {{producto.nombre}}</a></strong><br>
+    </li>
+    {{/listaConversacionesE}}
+
+    {{#listaConversacionesR}}
+    <li>
+        <strong><a href="/conversacion/{{id}}">Chat con: {{emisor.nombreUsuario}} para:
+            {{producto.nombre}}</a></strong><br>
+    </li>
+    {{/listaConversacionesR}}
+</ul>
+
 {{>PieDePagina}}
