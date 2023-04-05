@@ -1,72 +1,72 @@
 {{>Cabecera}}
-<head>
-    <meta charset="UTF-8">
-    <title>Modificar Producto </title>
 
-</head>
-<title>Modificar producto</title>
-<div style="background-color: #c9ffff">
-
-    <h1>Formulario de modificar producto</h1>
-    <h3>Rellene los siguientes campos:</h3>
+<meta charset="UTF-8">
+<title>Modificar Producto </title>
 
 
+<h1>Formulario de modificar producto</h1>
+<h3>Rellene los siguientes campos:</h3>
 
-    {{^producto.hayImagen}}
-    <img src=/productoGenerico.png height="400" width="500"><br>
-    <label>Upload image: </label><br>
+{{^producto.hayImagen}}
+<img src=/productoGenerico.png height="300" width="277" alt="200"><br>
+<label>Upload image: </label><br>
+{{/producto.hayImagen}}
+
+
+<form method="post" action="//localhost:8080/modificado/{{producto.id}}" enctype="multipart/form-data"
+      style="margin-left: 100px">
+
+    {{#producto.hayImagen}}
+    <img src="/producto/{{producto.id}}/image" height="300" width="400" alt="200"><br>
+    <label>
+        <input type='checkbox' name='removeImage'>
+    </label> <label>Eliminar Imagen</label><br>
+    <label>Update image: </label><br>
     {{/producto.hayImagen}}
 
+    <label>- Imagen: </label>
+    <input type='file' name='imageField' accept=".png">
+    <br><br>
 
-
-    <form method="post" action="//localhost:8080/modificado/{{producto.id}}"enctype="multipart/form-data">
-        
-        {{#producto.hayImagen}}
-        <img src="/producto/{{producto.id}}/image" height="400" width="500"><br>
-        <input type='checkbox' name='removeImage'> <label>Eliminar Imagen</label><br>
-        <label>Update image: </label><br>
-        {{/producto.hayImagen}}
-
-        <label>
-            - Imagen: <input type='file' name='imageField' accept=".png">
-        </label><br><br>
-
-        <label>
-            - Nombre: <input type='text' value="{{producto.nombre}}" name='nombreProducto'  autocomplete="on"
-                             required>
-        </label>
-        <br>
-        <label>
-            - Categoría:
-            <select name="categoriaProducto" id="categoriaProducto" required>
-                <option value="" selected disabled hidden>-- Elija una categoria --</option>
-                <option value="Automoviles">Automoviles</option>
-                <option value="Calzado">Calzado</option>
-                <option value="Electrodomesticos">Electrodomésticos</option>
-                <option value="Hogar">Hogar</option>
-                <option value="Libros">Libros</option>
-                <option value="Deporte">Deporte</option>
-                <option value="Ropa">Ropa</option>
-                <option value="Tecnologia">Tecnologia</option>
-            </select>
-        </label>
-        <br>
-        <label>
-            - Descripción del producto: <br>
-            <textarea placeholder="Breve descripcion del producto" value="{{producto.descripcion}}" name='descripcionProducto' cols="40" rows="5" required></textarea>
-        </label>
-        <br>
-        <label>
-            - Precio: <input type='number' name='precioProducto' value="{{producto.precio}}" min="0" step="0.01" size="5" required/> Euros
-        </label>
-        <br><br><br>
-
-
-        <button> <a href="/"> Cancelar</a></button>
-        <input type="submit" value='modificar'>
-    </form>
+    <label>- Nombre: </label>
+    <label>
+        <input type='text' value="{{producto.nombre}}" name='nombreProducto' autocomplete="on" required>
+    </label>
     <br>
+    <label>- Categoría:</label>
+    <label>
+        <select name="categoriaProducto" id="categoriaProducto" required>
+            <option value="" selected disabled hidden>-- Elija una categoría --</option>
+            <option value="Automoviles">Automóviles</option>
+            <option value="Calzado">Calzado</option>
+            <option value="Electrodomesticos">Electrodomésticos</option>
+            <option value="Hogar">Hogar</option>
+            <option value="Libros">Libros</option>
+            <option value="Deporte">Deporte</option>
+            <option value="Ropa">Ropa</option>
+            <option value="Tecnologia">Tecnologia</option>
+        </select>
+    </label>
+    <br>
+    <label style="width: 250px"> - Descripción del producto: </label><br>
 
-</div>
+    <label>
+        <textarea placeholder="Breve descripción del producto" value="{{producto.descripcion}}"
+                  name='descripcionProducto' cols="40" rows="5" required></textarea>
+    </label>
+    <br><br>
+    <label>- Precio: </label>
+    <label>
+        <input style="width: 80px" type='number' name='precioProducto' value="{{producto.precio}}" min="0" step="0.05"
+               size="5"
+               required/>
+    </label> Euros
+    <br><br><br>
 
+    <button><a href="/"> Cancelar</a></button>
+    <input type="submit" value='Modificar'
+           style=" color: lightgrey;background-color: forestgreen; font-size: large;box-shadow: 1px 1px 1px 1px black;">
+    <input type="hidden" name="_csrf" value="{{token}}"/>
+</form>
+<br>
 {{>PieDePagina}}
