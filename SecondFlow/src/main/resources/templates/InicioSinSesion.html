@@ -1,21 +1,20 @@
 <title>Pagina Principal</title>
 {{>Cabecera}}
 <body>
-<div style="background-color: #c9ffff">
-    <div style="text-align: center">
-        <h1>Bienvenido al espacio de compra - venta mas grande en el mundo universitario </h1>
-    </div>
-
-    <form action='/login'>- Iniciar Sesion
+<h1>Página principal</h1>
+<h2 style="text-align: center">Bienvenido al espacio de compra - venta más grande del mundo universitario </h2>
+<div style="margin-left: 50px">
+    <form action='/login'>
+        <label>- Iniciar Sesión</label>
         <input type='submit' value='Iniciar Sesion'>
-
-    </form>
-    <form action='/registrarse'>- Registrarse
-        <input type='submit' value='Registrarse'style="color: brown">
     </form>
 
-    {{>productos}}
+    <form action='/registrarse'>
+        <label>- Registrarse</label>
+        <input type='submit' value='Registrarse' style="color: brown">
+    </form>
     <br>
 </div>
+{{>productos}}
 </body>
 {{>PieDePagina}}
