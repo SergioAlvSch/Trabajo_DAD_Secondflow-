@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
 {{>Cabecera}}
-<head>
-    <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
-</head>
+<meta charset="UTF-8">
+<title>Iniciar Sesión</title>
+
 <body>
-<div style="background-color: #c9ffff" align="center">
-    <h1>Iniciar Sesión</h1>
+<h1>Iniciar Sesión</h1>
+<form role='form' method="post" action="/login" style="text-align: center">
+    <label style="text-align: justify">Nombre: </label>
+    <label>
+        <input type='text' name='nombreUsuario' placeholder="Nombre de usuario" autocomplete="on" required>
+    </label>
+    <br><br>
+    <label style="text-align: justify">Contraseña: </label>
+    <label>
+        <input type='password' name='claveUsuario' placeholder="Introduzca su contraseña" required>
+    </label>
+    <br><br>
+    <input type="reset" value='Borrar'/>
+    <input type="submit" value='Iniciar Sesión'
+           style=" color: lightgrey;background-color: forestgreen; font-size: large;box-shadow: 1px 1px 1px 1px black;">
 
-    <form role='form' method="post" action="/login">
-        <label>
-            Nombre: <input type='text' name='nombreUsuario' placeholder="Introduzca nombre de usuario" autocomplete="on"
-                           required>
-        </label><br><br>
+    <br><br><br>
+    <input type="hidden" name="_csrf" value="{{token}}"/>
 
-        <label>
-            Clave: <input type='password' name='claveUsuario' placeholder="Introduzca su contraseña" required>
-        </label><br><br>
-
-        <input type="reset" value='Borrar' style="color: red"/>
-        <input type="submit" value='Iniciar Sesión'><br><br>
-        <input type="hidden" name="_csrf" value="{{token}}"/>
-
-        <a href='/registrarse'>No tengo cuenta, Registrarse </a>
-
-    </form>
-</div>
+    No tengo cuenta, <a href='/registrarse'>Registrarse </a><br><br>
+</form>
 </body>
 {{>PieDePagina}}
