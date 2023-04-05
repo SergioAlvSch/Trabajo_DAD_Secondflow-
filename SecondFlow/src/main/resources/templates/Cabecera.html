@@ -1,6 +1,7 @@
-<html xmlns="http://www.w3.org/1999/html" xmlns="" xmlns="">
+<html xmlns="http://www.w3.org/1999/html" xmlns="" xmlns="" lang="">
 <div style="text-align: center;">
     <header>
+        <meta charset="UTF-8">
         <style>
             .alert {
                 padding: 20px;
@@ -23,46 +24,115 @@
                 color: black;
             }
         </style>
-        <div style="background: black">
-            <font COLOR="#c9ffff">
-                <h1>SECOND FLOW</h1>
-                <h4>Página de compra - venta de productos</h4>
-            </font>
-            <a type="image" href="/"><img src="/logo.png" width="400" height="200"></a>
+        <h1 style="background: radial-gradient( #c9ffff, darkgrey);
+            -webkit-background-clip: text;
+            color: transparent; text-shadow: none;">SECOND FLOW</h1>
+        <h4>Página de compra - venta de productos</h4>
+        <a type="image" href="/"><img src="/logo.png" width="400" height="200" alt="100"></a>
 
-            {{^logged}}
+        {{^logged}}
         <br>
-            <form action='/login' style="display: inline-block">- Iniciar Sesion
-                <input type='submit' value='Iniciar Sesion' style="background-color: #c9ffff">
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-            </form>
+        <form action='/login' style="display: inline-block">
+            <input type='submit' value='Iniciar Sesion' style="background-color: #c9ffff">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+        </form>
 
-            <form action='/registrarse' style="display: inline-block">- Registrarse
-                <input type='submit' value='Registrarse' style="background-color: #c9ffff">
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-            </form>
-            {{/logged}}
+        <form action='/registrarse' style="display: inline-block">
+            <input type='submit' value='Registrarse' style="background-color: #c9ffff">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+        </form>
+        <br><br>
+        {{/logged}}
 
-            {{#logged}}
-            <form action="/logout" method="post">
-                <button type="submit" style="color: red">Cerrar Sesión</button>
-                <input type="hidden" name="_csrf" value="{{token}}"/>
-            </form>
-            {{/logged}}
-        </div>
+        {{#logged}}
+        <form action="/logout" method="post">
+            <button type="submit" style="color: red">Cerrar Sesión</button>
+            <input type="hidden" name="_csrf" value="{{token}}"/>
+            <br><br>
+        </form>
+        {{/logged}}
+
         <style>
-            body{
-                background-color: #c9ffff;
+            body {
+                background: linear-gradient(135deg, lightskyblue, #c9ffff);
                 font-family: "Bahnschrift";
+                margin: 0px;
+                padding: 0px;
             }
-            h1{
-                font-family: "Bahnschrift";
-                text-shadow: 2px 2px 2px darkgrey;
-            }
-            button{
-                font-family: "Bahnschrift";
-               box-shadow:  1px 1px 1px black;
 
+            header {
+                background: black;
+                color: #c9ffff;
+            }
+
+            footer {
+                margin-bottom: 0px;
+                padding-bottom: 0px;
+                background: linear-gradient(to bottom, transparent, black, black, black, black, black);
+                color: #c9ffff;
+            }
+
+            a {
+                transition: all 3s;
+            }
+
+            a:hover, legend:hover {
+                color: blueviolet;
+                font-size: x-large;
+            }
+
+            h1 {
+                font-family: "Bahnschrift";
+                text-align: center;
+                text-shadow: 2px 1px 1px darkgrey;
+                transition: all 5s;
+            }
+
+            h1:hover {
+                letter-spacing: 5px;
+            }
+
+            input[type=submit] {
+                font-family: "Bahnschrift";
+                border: 25px;
+                border-radius: 5px;
+                box-shadow: 1px 1px 1px 1px darkgrey;
+            }
+
+            input:hover, button:hover {
+                box-shadow: 0 0 30px 1px lightgrey;
+            }
+
+            button {
+                font-family: "Bahnschrift";
+                border-radius: 5px;
+                border: 25px;
+                font-size: 15px;
+                box-shadow: 1px 1px 1px 1px darkgrey;
+            }
+
+            input {
+                font-family: "Bahnschrift";
+            }
+
+            input[type="reset"] {
+                font-family: "Bahnschrift";
+                color: lightgrey;
+                background-color: red;
+                border-radius: 5px;
+                border: 2px;
+                font-size: large;
+                box-shadow: 1px 1px 1px 1px black;
+            }
+
+            label {
+                width: 150px;
+                display: inline-block;
+            }
+
+
+            select {
+                box-shadow: 1px 1px;
             }
         </style>
     </header>
