@@ -4,47 +4,53 @@
     <title>Registrarse</title>
 </head>
 <body>
-<div style="background-color: #c9ffff">
-    <div style="text-align: center">
-        <h1>Registrarse</h1>
-    </div>
-    {{#errorNombre}}
-    <div class="alert">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong>El usuario introducido ya existe</strong>
-    </div>
-    {{/errorNombre}}
-    {{#errorClave}}
-    <div class="alert">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong>Las contraseñas introducidas no coinciden</strong>
-    </div>
-    {{/errorClave}}
-    <form method="post" action="/">
-        <label>
-            Nombre: <input type='text' name='nombreUsuario' value="{{nombreTemp}}" style=""
-                           placeholder="Introduzca un nombre como usuario"
-                           autocomplete="on" required>
-        </label><br><br>
-        <label>
-            - Email: <input type='email' name='correoUsuario' value="{{correoTemp}}"
-                            pattern="[a-z0-9._]+(@gmail+\.|@hotmail+\.|@alumnos.urjc+\.)+(com|es|org)$"
-                            placeholder="Nombre del producto" autocomplete="on"
-                            required>
-        </label><br><br>
-        <label>
-            Password: <input type='password' name='passwordUsuario' value="{{passwordTemp}}"
-                             placeholder="Introduzca contraseña" required>
-        </label><br><br>
-        <label>
-            Repetición Password: <input type='password' value="{{password2Temp}}" name='password2Usuario'
-                                        placeholder="Repita la contraseña" required>
-        </label><br><br>
-        <input type="reset" value='Borrar' style="color: red"/>
-        <input type="submit" value='Registrar'><br><br>
-        <input type="hidden" name="_csrf" value="{{token}}" />
-        <a href='/login'>Ya tengo cuenta, Iniciar Sesion </a>
-    </form>
+<div style="text-align: center">
+    <h1>Registrarse</h1>
 </div>
+{{#errorNombre}}
+<div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>El usuario introducido ya existe</strong>
+</div>
+{{/errorNombre}}
+{{#errorClave}}
+<div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>Las contraseñas introducidas no coinciden</strong>
+</div>
+{{/errorClave}}
+<form method="post" action="/" style="text-align: center">
+    <label style="text-align: justify">Nombre: </label>
+    <label>
+        <input type='text' name='nombreUsuario' value="{{nombreTemp}}" placeholder="Nombre de usuario"
+               autocomplete="on" required>
+    </label>
+    <br><br>
+    <label style="text-align: justify">Email: </label>
+    <label>
+        <input type='email' name='correoUsuario' value="{{correoTemp}}"
+               pattern="[a-z0-9._]+(@gmail+\.|@hotmail+\.|@alumnos.urjc+\.)+(com|es|org)$"
+               placeholder="Correo electrónico" autocomplete="on" required>
+    </label>
+    <br><br>
+    <label style="text-align: justify">Password: </label>
+    <label>
+        <input type='password' name='passwordUsuario' value="{{passwordTemp}}"
+               placeholder="Introduzca contraseña" required>
+    </label>
+    <br><br>
+    <label style="text-align: justify">Repetición Password: </label>
+    <label>
+        <input type='password' value="{{password2Temp}}" name='password2Usuario'
+               placeholder="Repita la contraseña" required>
+    </label>
+    <br><br>
+    <input type="reset" value='Borrar'/>
+    <input type="submit" value='Registrar'
+           style=" color: lightgrey;background-color: forestgreen; font-size: large;box-shadow: 1px 1px 1px 1px black;"><br><br>
+    <input type="hidden" name="_csrf" value="{{token}}"/>
+    <br><br>
+    Ya tengo cuenta, <a href='/login'>Iniciar Sesión </a>
+</form>
 </body>
 {{>PieDePagina}}
