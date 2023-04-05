@@ -1,47 +1,51 @@
 {{>Cabecera}}
 <title>Subir producto</title>
-    <h1>Formulario de nuevo producto</h1>
-    <h3>Rellene los siguientes campos:</h3>
-    
-    <form method="post" action="/NuevoProducto" enctype="multipart/form-data">
+<h1>Formulario de nuevo producto</h1>
+<h3>Rellene los siguientes campos:</h3>
+<meta charset="UTF-8">
 
-        <label>
-            - Imagen: <input type='file' name='imageField' accept=".png">
-        </label><br><br>
-        <label>
-            - Nombre: <input type='text' name='nombreProducto' placeholder="Nombre del producto" autocomplete="on"
-                             required>
-        </label>
-        <br><br>
-        <label>
-            - Categoría:
-            <select name="categoriaProducto" id="categoriaProducto" required>
-                <option value="" selected disabled hidden>-- Elija una categoria --</option>
-                <option value="Automoviles">Automoviles</option>
-                <option value="Calzado">Calzado</option>
-                <option value="Electrodomesticos">Electrodomésticos</option>
-                <option value="Hogar">Hogar</option>
-                <option value="Libros">Libros</option>
-                <option value="Deporte">Deporte</option>
-                <option value="Ropa">Ropa</option>
-                <option value="Tecnologia">Tecnologia</option>
-            </select>
-        </label>
-        <br><br>
-        <label>
-            - Descripción del producto: <br>
-            <textarea placeholder="Breve descripcion del producto"
-                      name='descripcionProducto' cols="40" rows="5" required></textarea>
-        </label>
-        <br><br>
-        <label>
-            - Precio: <input type='number' name='precioProducto' min="0" step="0.01" size="5" required/> Euros
-        </label>
-        <br><br><br>
-        <input type="reset" value='Eliminar' style="color: red"/>
-        <input type="submit" value='Crear Producto' style="font-size: large">
-        <input type="hidden" name="_csrf" value="{{token}}"/>
-    </form>
-    <br>
-
+<form method="post" action="/NuevoProducto" enctype="multipart/form-data"
+      style="margin-left: 100px; align-items: center">
+    <label> - Imagen: </label>
+    <input type='file' name='imageField' accept=".png">
+    <br><br>
+    <label> - Nombre: </label>
+    <label>
+        <input type='text' name='nombreProducto' placeholder="Nombre del producto" autocomplete="on" required>
+    </label>
+    <br><br>
+    <label> - Categoría: </label>
+    <label for="categoriaProducto">
+        <select name="categoriaProducto" id="categoriaProducto" required>
+            <option value="" selected disabled hidden>-- Elija una categoría --</option>
+            <option value="Automoviles">Automóviles</option>
+            <option value="Calzado">Calzado</option>
+            <option value="Electrodomesticos">Electrodomésticos</option>
+            <option value="Hogar">Hogar</option>
+            <option value="Libros">Libros</option>
+            <option value="Deporte">Deporte</option>
+            <option value="Ropa">Ropa</option>
+            <option value="Tecnologia">Tecnología</option>
+        </select>
+    </label>
+    <br><br>
+    <label style="width: 250px"> - Descripción del producto: </label><br>
+    <label>
+<textarea placeholder="Breve descripción del producto"
+          name='descripcionProducto' cols="40" rows="5" required>
+</textarea>
+    </label>
+    <br><br>
+    <label>- Precio: </label>
+    <label>
+        <input style="width: 80px" type='number' name='precioProducto' min="0" step="0.05" size="5"
+               required/> Euros
+    </label>
+    <br><br><br>
+    <input type="reset" value='Eliminar'/>
+    <input type="submit" value='Crear Producto'
+           style=" color: lightgrey;background-color: forestgreen; font-size: large;box-shadow: 1px 1px 1px 1px black;">
+    <input type="hidden" name="_csrf" value="{{token}}"/>
+</form>
+<br>
 {{>PieDePagina}}
