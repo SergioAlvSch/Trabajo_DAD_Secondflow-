@@ -1,5 +1,9 @@
 package es.SecondFlow.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,16 +15,20 @@ public class Conversacion {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JsonIgnore
     Producto producto;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JsonIgnore
     Usuario emisor;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JsonIgnore
     Usuario receptor;
 
     @OneToMany(mappedBy = "conversacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     List<Mensaje> listaMensajes;
 
     public Long getId() {
