@@ -82,7 +82,7 @@ public class SecondFlowController {
         model.addAttribute("logged", true);
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
         model.addAttribute("usuario", gestionUsuarios.findByNombre(usuario.getName()));
-
+        String aux = usuario.getName();
 
         return "Inicio";
     }
@@ -237,7 +237,9 @@ public class SecondFlowController {
                 p.get().setHayComprador();
                 vendedor.getListaProductos().remove(p.get());
                 p.get().setComprador(comprador.get());
-                gestionProductos.delete(p.get().getId());
+                gestionProductos.delete(p.get());
+
+                gestionConversaciones.update();
                 gestionUsuarios.update();
                 gestionProductos.update();
                 model.addAttribute("producto", p.get());
@@ -261,12 +263,11 @@ public class SecondFlowController {
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
         if (producto.isPresent()) {
             model.addAttribute("producto", producto.get());
-            //todo: modificar cuando web
             List<Conversacion> conversacionesAsociadas = gestionConversaciones.findByProducto(producto.get());
             for (Conversacion aux : conversacionesAsociadas) {
                 gestionConversaciones.delete(aux.getId());
             }
-            gestionProductos.delete(id);
+            gestionProductos.delete(producto.get());
             return "productoeliminado";
         } else {
             model.addAttribute("usuario", gestionUsuarios.findByNombre(usuario.getName()));
@@ -313,6 +314,7 @@ public class SecondFlowController {
             }
             gestionProductos.update();
             model.addAttribute("producto", producto.get());
+            model.addAttribute("isVendedor", true);
             return "producto";
         } else {
             model.addAttribute("usuario", gestionUsuarios.findByNombre(usuario.getName()));
@@ -497,7 +499,7 @@ public class SecondFlowController {
                 long idUsuarioLog = gestionUsuarios.findByNombre(usuario.getName()).getId();
                 model.addAttribute("producto", p);
                 model.addAttribute("isVendedor", idUsuarioLog == p.getVendedor().getId());
-                model.addAttribute("idComprador", conversacion.get().getEmisor());
+                model.addAttribute("idComprador", conversacion.get().getEmisor().getId());
                 model.addAttribute("conversacionAbierta", conversacion.get());
                 model.addAttribute("listaMensajes", conversacion.get().getListaMensajes());
                 model.addAttribute("listaConversaciones", auxConversaciones);
