@@ -1,5 +1,8 @@
 package es.SecondFlow.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Blob;
 
@@ -24,9 +27,11 @@ public class Producto {
 
     private boolean hayImagen;
     @ManyToOne
+    @JsonIgnore
     private Usuario vendedor;
 
     @ManyToOne
+    @JsonIgnore
     private Usuario comprador;
     
     private boolean hayComprador;
