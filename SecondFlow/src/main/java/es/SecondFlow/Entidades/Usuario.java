@@ -1,5 +1,8 @@
 package es.SecondFlow.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -11,14 +14,18 @@ import java.util.*;
 @SessionScope //instancia del componente de cada usuario
 public class Usuario {
     @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     List<Producto> listaMisProductos;
     @OneToMany(mappedBy = "comprador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     List<Producto> listaMisProductosComprados;
 
     @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     List<Conversacion> listaMisConversacionesE;
 
     @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     List<Conversacion> listaMisConversacionesR;
     String nombreUsuario;
 
