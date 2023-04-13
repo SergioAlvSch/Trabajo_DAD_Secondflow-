@@ -15,16 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-//@CacheConfig(cacheNames = "productos")
+@CacheConfig(cacheNames = "productos")
 public class GestionProductos {
 
     @Autowired
     private RepositorioProductos repositorio;
-    //@Cacheable
+    @Cacheable
     public Optional<Producto> findById(long id) {
         return repositorio.findById(id);
     }
-    //@Cacheable
+    @Cacheable
     public List<Producto> findByNombre(String nombre) {
         List<Producto> productosConNombre=new ArrayList<>();
         for (Producto aux: repositorio.findAll()){
@@ -34,27 +34,27 @@ public class GestionProductos {
         }
         return productosConNombre;
     }
-    //@CacheEvict(allEntries = true)
-    //@Transactional
+    @CacheEvict(allEntries = true)
+    @Transactional
     public void update(){repositorio.flush();}
-    //@Cacheable
+    @Cacheable
     public boolean exist(long id) {
         return repositorio.existsById(id);
     }
-    //@Cacheable
+    @Cacheable
     public List<Producto> findAll() {
         return repositorio.findAll();
     }
-    //@CacheEvict(allEntries = true)
+    @CacheEvict(allEntries = true)
     public void save(Producto producto) {
         repositorio.saveAndFlush(producto);
     }
-    //@CacheEvict(allEntries = true)
+    @CacheEvict(allEntries = true)
     public void delete(Producto p) {
         repositorio.delete(p);
 
     }
-    //@Cacheable
+    @Cacheable
     public List<Producto> findAllDisponibles() {
         List<Producto> listaDisponibles = new ArrayList<>();
         for(Producto aux : repositorio.findAll()){
@@ -63,5 +63,9 @@ public class GestionProductos {
             }
         }
         return listaDisponibles;
+    }
+
+    public RepositorioProductos getRepositorio() {
+        return repositorio;
     }
 }

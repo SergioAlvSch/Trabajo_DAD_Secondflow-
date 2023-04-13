@@ -25,12 +25,12 @@ public class Cache {
         return cache.getNativeCache();
     }
 
-    /*@RequestMapping(value="/cacheProductos", method= RequestMethod.GET)
+    @RequestMapping(value="/cacheProductos", method= RequestMethod.GET)
     public Map<Object, Object> getCacheProductosContent() {
         ConcurrentMapCacheManager cacheMgr = (ConcurrentMapCacheManager) cacheManager;
         ConcurrentMapCache cache = (ConcurrentMapCache) cacheMgr.getCache("productos");
         return cache.getNativeCache();
-    }*/
+    }
 
     @RequestMapping(value="/cacheConversaciones", method= RequestMethod.GET)
     public Map<Object, Object> getCacheConversacionesContent() {

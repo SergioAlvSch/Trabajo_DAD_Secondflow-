@@ -225,7 +225,7 @@ public class SecondFlowController {
     @RequestMapping("/producto/vendido/{id}/{idComprador}")
     public String productoVendido(Model model, @PathVariable long id, @PathVariable long idComprador, HttpServletRequest request) {
         Principal usuario = request.getUserPrincipal();
-        Optional<Producto> p = gestionProductos.findById(id);
+        Optional<Producto> p = gestionProductos.getRepositorio().findById(id);
 
         model.addAttribute("logged", true);
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
@@ -280,7 +280,7 @@ public class SecondFlowController {
     @GetMapping("/modificando/{id}")
     public String modificarProducto(Model model, @PathVariable long id, HttpServletRequest request) {
         Principal usuario = request.getUserPrincipal();
-        Optional<Producto> producto = gestionProductos.findById(id);
+        Optional<Producto> producto = gestionProductos.getRepositorio().findById(id);
 
         model.addAttribute("logged", true);
         model.addAttribute("admin", request.isUserInRole("ADMIN"));
@@ -298,7 +298,7 @@ public class SecondFlowController {
     public String productoModificado(Model model, @PathVariable long id, String nombreProducto, String categoriaProducto, double precioProducto, String descripcionProducto, MultipartFile imageField, boolean removeImage, HttpServletRequest request) throws IOException {
 
         Principal usuario = request.getUserPrincipal();
-        Optional<Producto> producto = gestionProductos.findById(id);
+        Optional<Producto> producto = gestionProductos.getRepositorio().findById(id);
 
         model.addAttribute("logged", true);
         model.addAttribute("admin", request.isUserInRole("ADMIN"));

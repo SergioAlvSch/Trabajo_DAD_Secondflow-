@@ -16,7 +16,7 @@ public class SecondFlowApplication {
 	}
 	@Bean
 	public CacheManager cacheManager(){
-		return new ConcurrentMapCacheManager("usuarios",/*"productos",*/"conversaciones");
+		return new ConcurrentMapCacheManager("usuarios","productos","conversaciones");
 	}
 
 }
