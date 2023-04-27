@@ -10,7 +10,7 @@ import es.SecondFlow.Entidades.Usuario;
 import es.SecondFlow.Entidades.Producto;
 @Service
 public class ServicioInternoEmail {
-    private static final String MAIL_SERVICE_URL = "http://localhost:8444";
+    private static final String MAIL_SERVICE_URL = "http://10.100.139.126:80";
     public static boolean sendRegisterEmail(Usuario usuario) {
         try {
             Email email = new Email(usuario.getCorreo(), "Registro SecondFlow","¡Gracias "+usuario.getNombreUsuario()+" por registrarte en SecondFlow, disfruta de nuestra web!");

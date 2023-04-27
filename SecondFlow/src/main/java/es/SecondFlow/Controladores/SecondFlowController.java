@@ -540,7 +540,6 @@ public class SecondFlowController {
         if (password2Usuario.equals(passwordUsuario) && gestionUsuarios.findByNombre(nombreUsuario) == null) {
             Usuario registrado = new Usuario(nombreUsuario, passwordEncoder.encode(password2Usuario), correoUsuario, "USER");
             gestionUsuarios.save(registrado);
-
             if (ServicioInternoEmail.sendRegisterEmail(registrado)) {
                 return "InicioSinSesion";
             }
