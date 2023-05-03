@@ -23,6 +23,9 @@ Eduard Vasile Stancu
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-subida-de-jar-">-&nbsp &nbspSubida del .jar </a>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-instalaciones-en-maquina-">-&nbsp &nbspInstalaciones en maquina  </a>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-ejecutar-la-aplicaci%C3%B3n-">-&nbsp &nbspEjecucion de la aplicación  </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-fase-4-"> Fase 4  </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-diagrama-de-conexiones-">-&nbsp &nbsp Diagrama de conexiones </a>
+<br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-video-">-&nbsp &nbsp Video </a>
 
 
 <h1 align="center"> Fase 1 </h1>
