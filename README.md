@@ -124,7 +124,7 @@ Pantalla donde se podrá acceder a las distintas conversaciones que tenga uno ab
 
 <h3> Diagrama de clases UML </h3>
   <div align="center">
-<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/Uml.png" alt="android" width="800" height="500"/> </div>
+<img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/DiagramaDeConexiones.png" alt="android" width="800" height="500"/> </div>
 
 <h3> Diagrama Entidad/Relación </h3>
 <div align="center">
@@ -167,3 +167,6 @@ Estando dentro de la maquina virtual ssh:<br>
 2.-Abrimos una nueva terminal<br>
 3.-Repetir paso 1 con el .jar del servicio interno<br>
 4.-Acceder a la pagina con : https://"Ip Flotante":"PUERTO ASOCIADO"<br>
+
+<h1 align="center"> Fase 4 </h1>
+<h2> Diagrama de conexiones </h2>
