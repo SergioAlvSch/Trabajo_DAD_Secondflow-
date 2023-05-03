@@ -170,6 +170,16 @@ Estando dentro de la maquina virtual ssh:<br>
 
 <h1 align="center"> Fase 4 </h1>
 <h2> Diagrama de conexiones </h2>
+<div align="justify">
+
+Nuestro programa se ha realizado dentro de contenedores docker, como se ha explicado anteriormente, de manera que su esquema quedaria tal que asi:
+</div>
   <div align="center">
 <img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/DiagramaDeConexiones.png" alt="android" width="800" height="500"/> </div>
+<div align="justify">
+
+Como se puede apreciar en la imagen, los usuarios solo se podran conectarse a la aplicacion a partir de la Ip publica del balanceador de carga, de forma que este se encargara de redirigir las peticiones a traves de las Ip's privadas del programa principal correspondiente.<br>
+A su vez el programa principal accedera al servicio interno a traves del balanceador a traves de otro frontend especifico para los servicios internos.<br>
+Y por ultimo tenemos una instancia para la Base de datos que es comun para las dos aplicaciones, que se conectan a esta mediante su Ip privada.<br>
+</div>
 <h2> Video </h2>
