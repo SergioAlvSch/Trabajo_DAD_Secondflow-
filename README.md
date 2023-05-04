@@ -1,4 +1,4 @@
-# Trabajo_DAD_Secondflow
+# Trabajo_DAD_SECOND-FLOW
 Trabajo pagina web Diseño de Aplicaciones Distribuidas URJC 2023
 <div align="center"><img src="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-/blob/Documentacion/Ilustraciones/logo.png"width="500" height="300"/> </div>
 <h2>Miembros:</h2>
@@ -7,9 +7,11 @@ Martin Alami Mochi<br>
 Eduard Vasile Stancu
 
 <h1> Video explicativo </h1>
-
+<div align="center">
+  
 [![FUNCIONAMIENTO VIDEO](https://img.youtube.com/vi/6MZLL9vDzSE/0.jpg)](https://www.youtube.com/watch?v=6MZLL9vDzSE/0 "FUNCIONAMIENTO VIDEO ")
 
+</div>
 
 <h1> Índice </h1>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-fase-1-"> Fase 1  </a>
@@ -191,6 +193,21 @@ Como se puede apreciar en la imagen, los usuarios solo se podran conectarse a la
 A su vez el programa principal accedera al servicio interno a traves del balanceador a traves de otro frontend especifico para los servicios internos.<br>
 Y por ultimo tenemos una instancia para la Base de datos que es comun para las dos aplicaciones, que se conectan a esta mediante su Ip privada.<br>
 </div>
-<h2> Video </h2>
+  
+ <h2> Comandos Docker </h2>
 
+- Contruir una imgen:  sudo docker build -t  USUARIO_CREADO_EN_DOCKER / NOMBRE_IMAGEN   DIRECCION_DOCKERFILE
+- Visualizar imagenes: sudo docker images
+- Arrancar un contenedor a partir de una imagen: sudo docker run -d -p 8443:8443 NOMBRE_IMAGEN
+- Visualizar estado contenedores:  sudo docker ps -a
+- Acceso a MySQL: sudo docker exec -it NOMBRE_SQL mysql -uroot -p
+  
+- Visualizar estado haproxy: sudo systemctl status haproxy
+
+
+  
+<h2> Video </h2>
+<div align="center">
+  
 [![FUNCIONAMIENTO VIDEO](https://img.youtube.com/vi/6MZLL9vDzSE/0.jpg)](https://www.youtube.com/watch?v=6MZLL9vDzSE/0 "FUNCIONAMIENTO VIDEO ")
+</div>
