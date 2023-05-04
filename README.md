@@ -5,6 +5,12 @@ Trabajo pagina web Diseño de Aplicaciones Distribuidas URJC 2023
 Sergio Alvarez Scharfhausen<br>
 Martin Alami Mochi<br>
 Eduard Vasile Stancu
+
+<h1> Video explicativo </h1>
+
+[![FUNCIONAMIENTO VIDEO](https://img.youtube.com/vi/6MZLL9vDzSE/0.jpg)](https://www.youtube.com/watch?v=6MZLL9vDzSE/0 "FUNCIONAMIENTO VIDEO ")
+
+
 <h1> Índice </h1>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#-fase-1-"> Fase 1  </a>
 <br> <a href="https://github.com/SergioAlvSch/Trabajo_DAD_Secondflow-#descripcion">-&nbsp &nbsp Descripción  </a>
@@ -186,3 +192,5 @@ A su vez el programa principal accedera al servicio interno a traves del balance
 Y por ultimo tenemos una instancia para la Base de datos que es comun para las dos aplicaciones, que se conectan a esta mediante su Ip privada.<br>
 </div>
 <h2> Video </h2>
+
+[![FUNCIONAMIENTO VIDEO](https://img.youtube.com/vi/6MZLL9vDzSE/0.jpg)](https://www.youtube.com/watch?v=6MZLL9vDzSE/0 "FUNCIONAMIENTO VIDEO ")
