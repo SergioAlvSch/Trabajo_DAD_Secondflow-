@@ -180,6 +180,16 @@ Estando dentro de la maquina virtual ssh:<br>
 4.-Acceder a la pagina con : https://"Ip Flotante":"PUERTO ASOCIADO"<br>
 
 <h1 align="center"> Fase 4 </h1>
+<h2> Comandos Docker </h2>
+
+- Contruir una imgen:  sudo docker build -t  USUARIO_CREADO_EN_DOCKER / NOMBRE_IMAGEN   DIRECCION_DOCKERFILE
+- Visualizar imagenes: sudo docker images
+- Arrancar un contenedor a partir de una imagen: sudo docker run -d -p 8443:8443 NOMBRE_IMAGEN
+- Visualizar estado contenedores:  sudo docker ps -a
+- Acceso a MySQL: sudo docker exec -it NOMBRE_SQL mysql -uroot -p
+  
+- Visualizar estado haproxy: sudo systemctl status haproxy
+  
 <h2> Diagrama de conexiones </h2>
 <div align="justify">
 
@@ -194,15 +204,7 @@ A su vez el programa principal accedera al servicio interno a traves del balance
 Y por ultimo tenemos una instancia para la Base de datos que es comun para las dos aplicaciones, que se conectan a esta mediante su Ip privada.<br>
 </div>
   
- <h2> Comandos Docker </h2>
 
-- Contruir una imgen:  sudo docker build -t  USUARIO_CREADO_EN_DOCKER / NOMBRE_IMAGEN   DIRECCION_DOCKERFILE
-- Visualizar imagenes: sudo docker images
-- Arrancar un contenedor a partir de una imagen: sudo docker run -d -p 8443:8443 NOMBRE_IMAGEN
-- Visualizar estado contenedores:  sudo docker ps -a
-- Acceso a MySQL: sudo docker exec -it NOMBRE_SQL mysql -uroot -p
-  
-- Visualizar estado haproxy: sudo systemctl status haproxy
 
 
   
