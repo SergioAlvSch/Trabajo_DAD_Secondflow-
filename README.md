@@ -44,7 +44,7 @@ Se trata de una web de compra/venta de artículos de segunda mano entre particul
 <strong>-&nbspUSUARIO:&nbsp &nbsp</strong> Representara a las personas registradas en la pagina.
 <br><strong>-&nbspPRODUCTO:&nbsp &nbsp</strong> Representa los artículos subidos a la plataforma por parte de los usuarios.
 <br><strong>-&nbspMENSAJES:&nbsp &nbsp</strong> Representa los mensajes que se envian entre usuarios cuando quieren realizar una compra.
-<br><strong>-&nbspCONVERSACIONES:&nbsp &nbsp</strong> Representa el conjunto de Chats entre usuarios con su correspondiente lista de mesajes.
+<br><strong>-&nbspCONVERSACIONES:&nbsp &nbsp</strong> Representa el conjunto de Chats entre usuarios con su correspondiente lista de mensajes.
 
 <h2>Funcionalidades:</h2>
 <strong>-&nbspPÚBLICAS:&nbsp &nbsp</strong> visualizar productos y perfiles de usuarios.
